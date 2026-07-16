@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Ngum Tech AI | AI Automation Agency</title>
+    <link rel="icon" type="image/png" href="images/ngumAI.png?v=2">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,9 +22,8 @@
 </head>
 
 <body>
-
+    <div class="progress-bar"></div>
     <!-- Navigation -->
-
     <nav class="navbar">
 
         <div class="logo">
@@ -31,22 +31,26 @@
         </div>
     
         <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Portfolio</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
     
         <a href="#" class="btn-primary">
             Book a Demo
         </a>
+        
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
     
     </nav>
     <!-- Hero -->
 <!-- Hero Section -->
 
-<section class="hero">
+<section id="home" class="hero">
 
     <div class="hero-content">
 
@@ -82,17 +86,21 @@ BLOCK 7 - Statistics Section
 <section class="stats">
 
     <div class="stat-box">
-        <h2>100+</h2>
+        <h2 class="counter" data-target="100">0</h2>
         <p>AI Solutions Delivered</p>
     </div>
 
     <div class="stat-box">
-        <h2>24/7</h2>
+        <h2>
+            <span class="counter" data-target="24">0</span>/7
+        </h2>
         <p>AI Availability</p>
     </div>
 
     <div class="stat-box">
-        <h2>95%</h2>
+        <h2>
+            <span class="counter" data-target="95">0</span>%
+        </h2>
         <p>Customer Satisfaction</p>
     </div>
 
@@ -110,13 +118,15 @@ BLOCK 9 - SERVICES
     <div class="services-grid">
 
         <!-- Service 1 -->
-        <div class="service-card">
-            <div class="service-icon">
-                <i class="fas fa-robot"></i>
+        <a href="#portfolio" class="service-link">
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3>AI Chatbots</h3>
+                <p>24/7 intelligent customer support that answers questions instantly.</p>
             </div>
-            <h3>AI Chatbots</h3>
-            <p>24/7 intelligent customer support that answers questions instantly.</p>
-        </div>
+        </a>
 
         <!-- Service 2 -->
         <div class="service-card">
@@ -169,144 +179,51 @@ BLOCK 9 - SERVICES
 <!-- =====================================
      BLOCK 8 – About Section
 ===================================== -->
-<!-- =====================================
-BLOCK 9 - Services Section
-====================================== -->
-<!-- ==================================
-BLOCK 10 - PORTFOLIO
-=================================== -->
-
-<section class="portfolio" id="portfolio">
-
-    <div class="section-title">
-        <h2>Our AI Portfolio</h2>
-        <p>See some of the AI solutions we've built for businesses.</p>
-    </div>
-
-    <div class="portfolio-grid">
-
-        <div class="portfolio-card">
-            <img src="images/chatbot.jpg" alt="AI Chatbot">
-            <div class="portfolio-info">
-                <h3>AI Chatbot</h3>
-                <p>24/7 customer support assistant powered by AI.</p>
-            </div>
-        </div>
-
-        <div class="portfolio-card">
-            <img src="images/receptionist.jpg" alt="AI Receptionist">
-            <div class="portfolio-info">
-                <h3>AI Receptionist</h3>
-                <p>Voice AI that answers calls and books appointments.</p>
-            </div>
-        </div>
-
-        <div class="portfolio-card">
-            <img src="images/workflow.jpg" alt="Workflow Automation">
-            <div class="portfolio-info">
-                <h3>Workflow Automation</h3>
-                <p>Automated business processes that save time.</p>
-            </div>
-        </div>
-
-    </div>
-
-</section>
-<section class="services" id="services">
-
-    <div class="section-title">
-        <h2>Our AI Services</h2>
-        <p>
-            We help businesses automate operations, improve customer experience,
-            and increase productivity with cutting edge AI solutions.
-        </p>
-    </div>
-
-    <div class="services-grid">
-
-        <div class="service-card">
-            <div class="service-icon">🤖</div>
-            <h3>AI Chatbots</h3>
-            <p>24/7 intelligent customer support that answers questions instantly.</p>
-        </div>
-
-        <div class="service-card">
-            <div class="service-icon">🎙️</div>
-            <h3>Voice AI Agents</h3>
-            <p>Human like AI receptionists that answer calls and book appointments.</p>
-        </div>
-
-        <div class="service-card">
-            <div class="service-icon">⚙️</div>
-            <h3>Workflow Automation</h3>
-            <p>Automate repetitive tasks and connect your business applications.</p>
-        </div>
-
-        <div class="service-card">
-            <div class="service-icon">📊</div>
-            <h3>AI Analytics</h3>
-            <p>Transform business data into actionable insights with AI.</p>
-        </div>
-
-        <div class="service-card">
-            <div class="service-icon">🧠</div>
-            <h3>Custom AI Solutions</h3>
-            <p>Tailored AI systems built specifically for your business needs.</p>
-        </div>
-
-        <div class="service-card">
-            <div class="service-icon">🔗</div>
-            <h3>API Integrations</h3>
-            <p>Connect AI with CRMs, Google Workspace, Slack, and more.</p>
-        </div>
-
-    </div>
-
-</section>
-<section class="about" id="about">
+<section class="about hidden" id="about">
 
     <div class="about-image">
-        <img src="images/about-ai.jpg" alt="AI Automation">
+        <img src="images/about-ai.jpg" alt="About Ngum Tech AI">
     </div>
 
     <div class="about-content">
-        <h2>Why Choose Ngum Tech AI?</h2>
+        <h2>About Ngum Tech AI</h2>
 
         <p>
-            We help businesses save time, reduce costs, and grow faster through AI powered automation.
-            From intelligent chatbots to voice assistants and workflow automation, we build AI employees
-            that work around the clock so your team can focus on what matters most.
+            We help businesses leverage Artificial Intelligence to automate repetitive tasks,
+            improve customer engagement, reduce operational costs, and scale faster using modern AI solutions.
         </p>
 
         <div class="about-features">
 
             <div class="feature">
-                ✅ AI Automation Experts
+                ✅ AI Strategy & Consulting
             </div>
 
             <div class="feature">
-                ✅ 24/7 AI Employees
+                ✅ AI Chatbots & Voice Agents
             </div>
 
             <div class="feature">
-                ✅ Fast Deployment
+                ✅ Workflow Automation
             </div>
 
             <div class="feature">
-                ✅ Secure & Reliable
+                ✅ Ongoing AI Support
             </div>
 
         </div>
 
-        <a href="#" class="btn-primary">
+        <a href="#contact" class="btn-primary">
             Learn More
         </a>
 
     </div>
+
 </section>
-    <!-- =====================================
-     BLOCK 9 – Portfolio Section
-===================================== -->
+<!-- =====================================
+BLOCK 9 - Services Section
+====================================== -->
+
 <!-- ==========================================
 BLOCK 12 – CASE STUDIES
 ========================================== -->
@@ -353,35 +270,83 @@ BLOCK 12 – CASE STUDIES
     </div>
 
 </section>
-<!-- ==================================
-BLOCK 11 – CONTACT
-================================== -->
+<!-- Testimonials -->
 
-<section class="contact" id="contact">
+<section class="testimonials" id="testimonials">
+
+    <div class="section-title">
+        <h2>What Clients Say</h2>
+        <p>Businesses trust Ngum Tech AI to automate their operations.</p>
+    </div>
+
+    <div class="testimonial-grid">
+
+        <div class="testimonial-card">
+            <p>
+                "Ngum Tech AI built an AI receptionist that now answers our calls 24/7.
+                We've reduced missed appointments by over 60%."
+            </p>
+
+            <h4>Sarah Johnson</h4>
+            <span>Medical Clinic Owner</span>
+        </div>
+
+        <div class="testimonial-card">
+            <p>
+                "Our customer support is now completely automated.
+                The chatbot handles hundreds of questions every day."
+            </p>
+
+            <h4>Michael Davis</h4>
+            <span>E-commerce Business</span>
+        </div>
+
+        <div class="testimonial-card">
+            <p>
+                "Their workflow automation saved our team several hours every week.
+                Highly recommended."
+            </p>
+
+            <h4>Emily Carter</h4>
+            <span>Operations Manager</span>
+        </div>
+
+    </div>
+
+</section>
+<!-- =============================================
+     BLOCK 11 - CONTACT
+============================================= -->
+<section id="contact" class="contact hidden">
 
     <div class="section-title">
         <h2>Let's Build Your AI Solution</h2>
         <p>Have a project in mind? We'd love to hear from you.</p>
     </div>
-
     <div class="contact-container">
-
-        <div class="contact-info">
-
-            <h3>Get In Touch</h3>
-
-            <p>📧 Email: hello@ngumtechai.com</p>
-
-            <p>📞 Phone: +1 (240) 555-1234</p>
-
-            <p>📍 Location: Maryland, USA</p>
-
-            <p>
-                We help businesses automate customer service,
-                appointments, workflows, and operations using AI.
-            </p>
-
-        </div>
+    <div class="contact-info">
+        <h3>Get In Touch</h3>
+    
+        <p>
+            📧 <strong>Email</strong><br>
+            info@ngumtechai.com
+        </p>
+    
+        <p>
+            📞 <strong>Phone</strong><br>
+            +1 (240) xxx-xxxx
+        </p>
+    
+        <p>
+            📍 <strong>Location</strong><br>
+            Maryland, USA
+        </p>
+    
+        <p>
+            We help businesses automate customer service,
+            appointments, workflows, and operations using AI.
+        </p>
+    </div>
 
         <form class="contact-form" action="https://formspree.io/f/xwvdzoyj" method="POST">
                 
@@ -412,19 +377,25 @@ BLOCK 11 – CONTACT
     <div class="portfolio-grid">
 
         <div class="portfolio-card">
-            <div class="portfolio-image">AI Receptionist</div>
+            <div class="portfolio-image">
+                <img src="images/receptionist.jpg" alt="AI Receptionist">
+            </div>
             <h3>AI Receptionist</h3>
             <p>An AI voice agent that answers calls, books appointments, and provides customer support 24/7.</p>
         </div>
 
         <div class="portfolio-card">
-            <div class="portfolio-image">Workflow Automation</div>
+            <div class="portfolio-image">
+                <img src="images/workflow.jpg" alt="Workflow Automation">
+            </div>
             <h3>Workflow Automation</h3>
             <p>Automated business processes using AI, APIs, and cloud integrations to eliminate repetitive work.</p>
         </div>
 
         <div class="portfolio-card">
-            <div class="portfolio-image">AI Chatbot</div>
+            <div class="portfolio-image">
+                <img src="images/chatbot.jpg" alt="AI Chatbot">
+            </div>
             <h3>AI Chatbot</h3>
             <p>Custom AI chatbot trained to answer customer questions and generate qualified leads.</p>
         </div>
@@ -432,41 +403,165 @@ BLOCK 11 – CONTACT
     </div>
 
 </section>
-    <!-- JavaScript -->
-    <!-- =====================================
-  
- =====================================
-     BLOCK 11 – Contact Section
-===================================== -->
+<!-- =========================
+CALL TO ACTION
+========================= -->
 
+<section class="cta">
 
+    <div class="cta-content">
+
+        <h2>Ready to Transform Your Business with AI?</h2>
+
+        <p>
+            Discover how AI can automate customer support,
+            appointments, workflows, and business operations.
+        </p>
+
+        <a href="#contact" class="btn-primary">
+            Book Your Free Consultation
+        </a>
+
+    </div>
+
+</section>
+<section class="contact hidden" id="contact">
+
+    <div class="section-title">
+        <h2>Let's Build Your AI Solution</h2>
+        <p>Tell us about your project and we'll get back to you within 24 hours.</p>
+    </div>
+
+    <form class="contact-form">
+
+        <input type="text" placeholder="Full Name" required>
+
+        <input type="email" placeholder="Email Address" required>
+
+        <input type="text" placeholder="Company">
+
+        <textarea placeholder="Tell us about your project..." rows="6"></textarea>
+
+        <button class="btn-primary" type="submit">
+            Send Message
+        </button>
+
+    </form>
+
+</section>
 <!-- =====================================
      BLOCK 12 – Footer
 ===================================== -->
-
 <footer class="footer">
 
-    <h2>Ngum Tech AI</h2>
+    <div class="footer-container">
 
-    <p>
-        Helping businesses automate with AI chatbots,
-        voice agents, workflow automation, and intelligent solutions.
-    </p>
+        <div class="footer-column">
+            <h2>Ngum Tech AI</h2>
 
-    <div class="footer-links">
-        <a href="#">Home</a>
-        <a href="#services">Services</a>
-        <a href="#portfolio">Portfolio</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
+            <p>
+                Helping businesses automate with AI chatbots,
+                voice agents, workflow automation,
+                and intelligent business solutions.
+            </p>
+        </div>
+
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+
+            <a href="#home">Home</a>
+            <a href="#services">Services</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Services</h3>
+
+            <p>AI Chatbots</p>
+            <p>AI Voice Agents</p>
+            <p>Workflow Automation</p>
+            <p>AI Consulting</p>
+        </div>
+
+        <div class="footer-column">
+            <h3>Contact</h3>
+
+            <p>📧 info@ngumtechai.com</p>
+            <p>📞 +1 (240) xxx-xxxx</p>
+            <p>📍 Maryland, USA</p>
+        </div>
+
     </div>
 
-    <p class="copyright">
+    <div class="footer-bottom">
         © 2026 Ngum Tech AI. All Rights Reserved.
-    </p>
+    </div>
 
 </footer>
-    <script src="script.js"></script>
+<!-- ==========================
+AI CHAT WIDGET
+========================== -->
+<!-- Entire new chatbot goes here -->
+
+<div id="chatToggle" class="chat-toggle">
+    💬
+</div>
+
+<div id="chatBox" class="chat-box">
+
+    <div class="chat-header">
+        <h3>Ngum Tech AI</h3>
+        <span id="closeChat">&times;</span>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+        <div class="chat-suggestions">
+
+            <button class="suggestion-btn">
+                💬 What services do you offer?
+            </button>
+        
+            <button class="suggestion-btn">
+                🤖 AI Chatbots
+            </button>
+        
+            <button class="suggestion-btn">
+                📞 AI Voice Receptionists
+            </button>
+        
+            <button class="suggestion-btn">
+                ⚙️ Workflow Automation
+            </button>
+        
+            <button class="suggestion-btn">
+                📅 Book a Free Demo
+            </button>
+        
+        </div>
+        <div class="bot-message">
+            👋 Hello! Welcome to Ngum Tech AI.
+            <br><br>
+            How can I help you today?
+        </div>
+    </div>
+
+    <div class="chat-footer">
+        <input
+            type="text"
+            id="chatInput"
+            placeholder="Type your message..."
+        >
+
+        <button id="sendMessage">
+            Send
+        </button>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
 
 </body>
 </html>
