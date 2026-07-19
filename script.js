@@ -12,11 +12,10 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, {
     root: null,
-    threshold: 0.8
+    threshold: 0.3
 });
 
 document.querySelectorAll("section:not(.hero)").forEach((section) => {
-    section.classList.add("hidden");
     observer.observe(section);
 });
 const sections = document.querySelectorAll("section");
@@ -43,7 +42,6 @@ window.addEventListener("scroll", () => {
         }
     });
 });
-// Existing JavaScript
 // Scroll Progress Bar
 window.addEventListener("scroll", () => {
 
@@ -60,7 +58,6 @@ window.addEventListener("scroll", () => {
 
 });
 const counters = document.querySelectorAll(".counter");
-const statsSection = document.querySelector(".stats");
 
 const counterObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -90,7 +87,7 @@ const counterObserver = new IntersectionObserver((entries) => {
         }
     });
 }, {
-    threshold: 0.5
+    threshold: 0.15
 });
 
 counters.forEach(counter => {
@@ -250,16 +247,16 @@ sendMessage.addEventListener("click", () => {
     typing.className = "bot-message";
     typing.id = "typing";
     typing.innerHTML = "🤖 Ngum Tech AI is typing...";
-    
+
     chatBody.appendChild(typing);
     chatBody.scrollTop = chatBody.scrollHeight;
-    
+
     setTimeout(() => {
-    
+
         document.getElementById("typing").remove();
-    
+
         addBotMessage(getBotReply(message));
-    
+
     }, 1000);
 
 });
