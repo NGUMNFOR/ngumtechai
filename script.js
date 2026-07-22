@@ -250,14 +250,43 @@ sendMessage.addEventListener("click", () => {
 
     chatBody.appendChild(typing);
     chatBody.scrollTop = chatBody.scrollHeight;
+fetch("https://ngumnfor.app.n8n.cloud/webhook/ngum-tech-ai-chat", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        message: message
+    })
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error(`Webhook error: ${response.status}`);
+    }
 
-    setTimeout(() => {
+    return response.json();
+})
+.then(data => {
+    const typingMessage = document.getElementById("typing");
 
-        document.getElementById("typing").remove();
+    if (typingMessage) {
+        typingMessage.remove();
+    }
 
-        addBotMessage(getBotReply(message));
+    addBotMessage(
+        data.reply || "Sorry, I could not generate a response."
+    );
+}).catch(error => {
+    console.error("Chatbot error:", error);
 
-    }, 1000);
+    const typingMessage = document.getElementById("typing");
+
+    if (typingMessage) {
+        typingMessage.remove();
+    }
+
+    addBotMessage(getBotReply(message));
+});
 
 });
 
@@ -269,4 +298,161 @@ chatInput.addEventListener("keypress", function(e){
 
     }
 
+});
+// =========================
+// HEALTHCARE DEMO MODAL
+// =========================
+
+const healthcareDemoButton = document.getElementById("healthcare-demo-button");
+const healthcareDemoModal = document.getElementById("healthcare-demo-modal");
+const healthcareDemoClose = document.getElementById("healthcare-demo-close");
+const healthcareDemoChat = document.getElementById("healthcare-demo-chat");
+const healthcareOptions = document.querySelectorAll(".healthcare-option");
+
+function openHealthcareDemo() {
+    if (!healthcareDemoModal) return;
+
+    healthcareDemoModal.classList.add("active");
+    document.body.classList.add("modal-open");
+}
+
+function closeHealthcareDemo() {
+    if (!healthcareDemoModal) return;
+
+    healthcareDemoModal.classList.remove("active");
+    document.body.classList.remove("modal-open");
+}
+
+if (healthcareDemoButton) {
+    healthcareDemoButton.addEventListener("click", openHealthcareDemo);
+}
+
+if (healthcareDemoClose) {
+    healthcareDemoClose.addEventListener("click", closeHealthcareDemo);
+}
+
+if (healthcareDemoModal) {
+    healthcareDemoModal.addEventListener("click", (event) => {
+        if (event.target === healthcareDemoModal) {
+            closeHealthcareDemo();
+        }
+    });
+}
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+        closeHealthcareDemo();
+    }
+});
+
+healthcareOptions.forEach((button) => {
+    button.addEventListener("click", () => {
+        const question = button.textContent.trim();
+
+        let reply = "";
+
+        if (question.includes("business hours")) {
+            reply =
+                "Ngum HealthCare is open Monday through Friday from 8:00 AM to 5:30 PM. We are closed on Saturdays and Sundays.";
+        } else if (question.includes("insurance")) {
+            reply =
+                "Yes. Ngum HealthCare accepts all kinds of insurance. Please bring your insurance information to your appointment.";
+        } else if (question.includes("book an appointment")) {
+            reply =
+                "I can help with that. Please provide your preferred date, preferred time, full name, email address, and phone number.";
+        }
+
+        healthcareDemoChat.insertAdjacentHTML(
+            "beforeend",
+            `
+            <div class="demo-user-message">
+                ${question}
+            </div>
+
+            <div class="demo-bot-message">
+                ${reply}
+            </div>
+            `
+        );
+
+        healthcareDemoChat.scrollTop = healthcareDemoChat.scrollHeight;
+    });
+});
+// ==========================
+// RESTAURANT DEMO MODAL
+// ==========================
+
+const restaurantDemoButton = document.getElementById("restaurant-demo-button");
+const restaurantDemoModal = document.getElementById("restaurant-demo-modal");
+const restaurantDemoClose = document.getElementById("restaurant-demo-close");
+const restaurantDemoChat = document.getElementById("restaurant-demo-chat");
+const restaurantOptions = document.querySelectorAll(".restaurant-option");
+
+function openRestaurantDemo() {
+    if (!restaurantDemoModal) return;
+
+    restaurantDemoModal.classList.add("active");
+    document.body.classList.add("modal-open");
+}
+
+function closeRestaurantDemo() {
+    if (!restaurantDemoModal) return;
+
+    restaurantDemoModal.classList.remove("active");
+    document.body.classList.remove("modal-open");
+}
+
+if (restaurantDemoButton) {
+    restaurantDemoButton.addEventListener("click", openRestaurantDemo);
+}
+
+if (restaurantDemoClose) {
+    restaurantDemoClose.addEventListener("click", closeRestaurantDemo);
+}
+
+if (restaurantDemoModal) {
+    restaurantDemoModal.addEventListener("click", (event) => {
+        if (event.target === restaurantDemoModal) {
+            closeRestaurantDemo();
+        }
+    });
+}
+restaurantOptions.forEach((button) => {
+    button.addEventListener("click", () => {
+        const question = button.textContent.trim();
+
+        let reply = "";
+
+        if (question.includes("What food do you serve")) {
+            reply =
+                "Our AI Restaurant Assistant can answer menu questions instantly, recommend dishes, explain ingredients, and help customers make ordering decisions.";
+        } else if (question.includes("business hours")) {
+            reply =
+                "The AI assistant can automatically answer questions about restaurant hours, location, reservations, and holiday schedules 24/7.";
+        } else if (question.includes("place an order")) {
+            reply =
+                "The AI can collect customer details, take food orders, send them to the restaurant, and even integrate with delivery and payment systems.";
+        }
+
+        restaurantDemoChat.insertAdjacentHTML(
+            "beforeend",
+            `
+            <div class="demo-user-message">
+                ${question}
+            </div>
+
+            <div class="demo-bot-message">
+                ${reply}
+            </div>
+            `
+        );
+
+        restaurantDemoChat.scrollTop = restaurantDemoChat.scrollHeight;
+    });
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+        closeRestaurantDemo();
+    }
 });

@@ -90,6 +90,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <li><a href="#portfolio">Portfolio</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
+            <li><a href="#demo-center">Demos</a></li>
         </ul>
     
         <a href="#contact"
@@ -323,7 +324,74 @@ BLOCK 12 – CASE STUDIES
         </div>
 
     </div>
+<section class="demo-center" id="demo-center">
+    <div class="section-heading">
+        <span class="section-label">Interactive AI Experiences</span>
+        <h2>AI Demo Center</h2>
+        <p>
+            Explore practical AI automation demos designed for real businesses.
+            Choose a demo below to see how AI can improve customer service,
+            scheduling, sales, and daily operations.
+        </p>
+    </div>
 
+    <div class="demo-grid">
+
+        <article class="demo-card">
+            <div class="demo-icon">🏥</div>
+            <h3>Healthcare AI Receptionist</h3>
+            <p>
+                Experience an AI assistant that answers patient questions,
+                checks availability, and helps schedule appointments.
+            </p>
+            <button
+    class="demo-button active-demo"
+    id="healthcare-demo-button"
+    type="button">
+    Try Demo
+</button>
+        </article>
+
+        <article class="demo-card">
+            <div class="demo-icon">🍽️</div>
+            <h3>Restaurant AI Assistant</h3>
+            <p>
+                Test an AI assistant that explains menu items, handles customer
+                questions, and supports food-order requests.
+            </p>
+            <button
+    class="demo-button active-demo"
+    id="restaurant-demo-button"
+    type="button">
+    Try Demo
+</button>
+        </article>
+
+        <article class="demo-card">
+            <div class="demo-icon">📅</div>
+            <h3>Appointment Booking AI</h3>
+            <p>
+                See how AI can collect customer details, check available times,
+                and guide visitors through the booking process.
+            </p>
+            <button class="demo-button" type="button">
+                Coming Soon
+            </button>
+        </article>
+
+        <article class="demo-card">
+            <div class="demo-icon">💬</div>
+            <h3>Customer Support Chatbot</h3>
+            <p>
+                Explore an AI support assistant that answers common questions,
+                explains services, and helps convert visitors into leads.
+            </p>
+            <button class="demo-button" type="button">
+                Coming Soon
+            </button>
+        </article>
+
+    </div>
 </section>
 <!-- Testimonials -->
 
@@ -647,9 +715,79 @@ AI CHAT WIDGET
             Send
         </button>
     </div>
+    </div>
+<!-- Healthcare AI Demo Modal -->
+<div class="demo-modal" id="healthcare-demo-modal">
+    <div class="demo-modal-content">
+        <button class="demo-modal-close" id="healthcare-demo-close" type="button">
+            ×
+        </button>
 
+        <div class="demo-modal-header">
+            <span class="demo-modal-icon">🏥</span>
+            <div>
+                <h2>Healthcare AI Receptionist Demo</h2>
+                <p>Try a simulated patient-support conversation.</p>
+            </div>
+        </div>
+
+        <div class="demo-chat-body" id="healthcare-demo-chat">
+            <div class="demo-bot-message">
+                Hello! Welcome to Ngum HealthCare. How may I assist you today?
+            </div>
+
+            <div class="demo-suggestions">
+                <button class="healthcare-option" type="button">
+                    What are your business hours?
+                </button>
+
+                <button class="healthcare-option" type="button">
+                    Do you accept insurance?
+                </button>
+
+                <button class="healthcare-option" type="button">
+                    I want to book an appointment
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
+<!-- Restaurant AI Demo Modal -->
+<div class="demo-modal" id="restaurant-demo-modal">
+    <div class="demo-modal-content">
+        <button class="demo-modal-close" id="restaurant-demo-close" type="button">
+            ×
+        </button>
 
+        <div class="demo-modal-header">
+            <span class="demo-modal-icon">🍽️</span>
+            <div>
+                <h2>Restaurant AI Assistant Demo</h2>
+                <p>Try a simulated restaurant-support conversation.</p>
+            </div>
+        </div>
+
+        <div class="demo-chat-body" id="restaurant-demo-chat">
+            <div class="demo-bot-message">
+             Experience how an AI assistant can help restaurants answer customer questions, take orders, and improve service.
+            </div>
+
+            <div class="demo-suggestions">
+                <button class="restaurant-option" type="button">
+                    What food do you serve?
+                </button>
+
+                <button class="restaurant-option" type="button">
+                    What are your business hours?
+                </button>
+
+                <button class="restaurant-option" type="button">
+                    I want to place an order
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="script.js"></script>
 
 </body>
