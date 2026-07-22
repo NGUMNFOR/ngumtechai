@@ -1882,7 +1882,9 @@ body.modal-open {
 }
 /* Make Healthcare and Restaurant demo options match */
 .healthcare-option,
-.restaurant-option {
+.restaurant-option,
+.appointment-option,
+.support-option {
     width: 100%;
     display: block;
     padding: 14px 16px;
@@ -1899,7 +1901,9 @@ body.modal-open {
 }
 
 .healthcare-option:hover,
-.restaurant-option:hover {
+.restaurant-option:hover,
+.appointment-option:hover,
+.support-option:hover {
     border-color: #2563eb;
     background: #eff6ff;
     transform: translateY(-1px);

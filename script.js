@@ -456,3 +456,161 @@ document.addEventListener("keydown", (event) => {
         closeRestaurantDemo();
     }
 });
+// ==========================
+// APPOINTMENT BOOKING DEMO
+// ==========================
+
+const appointmentDemoButton = document.getElementById("appointment-demo-button");
+const appointmentDemoModal = document.getElementById("appointment-demo-modal");
+const appointmentDemoClose = document.getElementById("appointment-demo-close");
+const appointmentDemoChat = document.getElementById("appointment-demo-chat");
+const appointmentOptions = document.querySelectorAll(".appointment-option");
+
+function openAppointmentDemo() {
+    if (!appointmentDemoModal) return;
+
+    appointmentDemoModal.classList.add("active");
+    document.body.classList.add("modal-open");
+}
+
+function closeAppointmentDemo() {
+    if (!appointmentDemoModal) return;
+
+    appointmentDemoModal.classList.remove("active");
+    document.body.classList.remove("modal-open");
+}
+
+if (appointmentDemoButton) {
+    appointmentDemoButton.addEventListener("click", openAppointmentDemo);
+}
+
+if (appointmentDemoClose) {
+    appointmentDemoClose.addEventListener("click", closeAppointmentDemo);
+}
+
+if (appointmentDemoModal) {
+    appointmentDemoModal.addEventListener("click", (event) => {
+        if (event.target === appointmentDemoModal) {
+            closeAppointmentDemo();
+        }
+    });
+}
+
+appointmentOptions.forEach((button) => {
+    button.addEventListener("click", () => {
+        const question = button.textContent.trim();
+
+        let reply = "";
+
+        if (question.includes("Check available times")) {
+            reply =
+                "Our next available appointments are tomorrow at 10:00 AM, 1:30 PM, and 3:00 PM.";
+        } else if (question.includes("Book an appointment")) {
+            reply =
+                "Great! Please provide your name, email address, and preferred appointment time to complete your booking.";
+        } else if (question.includes("Reschedule")) {
+            reply =
+                "No problem. Please provide your current appointment date and the new date you'd like, and I'll help you reschedule.";
+        }
+
+        appointmentDemoChat.insertAdjacentHTML(
+            "beforeend",
+            `
+            <div class="demo-user-message">
+                ${question}
+            </div>
+
+            <div class="demo-bot-message">
+                ${reply}
+            </div>
+            `
+        );
+
+        appointmentDemoChat.scrollTop = appointmentDemoChat.scrollHeight;
+    });
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+        closeAppointmentDemo();
+    }
+});
+// ==========================
+// CUSTOMER SUPPORT AI DEMO
+// ==========================
+
+const supportDemoButton = document.getElementById("support-demo-button");
+const supportDemoModal = document.getElementById("support-demo-modal");
+const supportDemoClose = document.getElementById("support-demo-close");
+const supportDemoChat = document.getElementById("support-demo-chat");
+const supportOptions = document.querySelectorAll(".support-option");
+
+function openSupportDemo() {
+    if (!supportDemoModal) return;
+
+    supportDemoModal.classList.add("active");
+    document.body.classList.add("modal-open");
+}
+
+function closeSupportDemo() {
+    if (!supportDemoModal) return;
+
+    supportDemoModal.classList.remove("active");
+    document.body.classList.remove("modal-open");
+}
+
+if (supportDemoButton) {
+    supportDemoButton.addEventListener("click", openSupportDemo);
+}
+
+if (supportDemoClose) {
+    supportDemoClose.addEventListener("click", closeSupportDemo);
+}
+
+if (supportDemoModal) {
+    supportDemoModal.addEventListener("click", (event) => {
+        if (event.target === supportDemoModal) {
+            closeSupportDemo();
+        }
+    });
+}
+
+supportOptions.forEach((button) => {
+    button.addEventListener("click", () => {
+        const question = button.textContent.trim();
+
+        let reply = "";
+
+        if (question.includes("What services do you offer")) {
+            reply =
+                "Ngum Tech AI provides AI receptionists, appointment-booking automation, customer-support chatbots, workflow automation, and custom AI solutions for businesses.";
+        } else if (question.includes("How much does AI automation cost")) {
+            reply =
+                "Pricing depends on the workflow, integrations, and level of customization. We begin with a consultation to understand your goals and recommend the right solution.";
+        } else if (question.includes("schedule a consultation")) {
+            reply =
+                "Great! You can use the Book a Demo button to send your details and request a consultation with Ngum Tech AI.";
+        }
+
+        supportDemoChat.insertAdjacentHTML(
+            "beforeend",
+            `
+            <div class="demo-user-message">
+                ${question}
+            </div>
+
+            <div class="demo-bot-message">
+                ${reply}
+            </div>
+            `
+        );
+
+        supportDemoChat.scrollTop = supportDemoChat.scrollHeight;
+    });
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+        closeSupportDemo();
+    }
+});
