@@ -299,6 +299,24 @@ chatInput.addEventListener("keypress", function(e){
     }
 
 });
+function showTypingIndicator(chatContainer) {
+    const typingMessage = document.createElement("div");
+
+    typingMessage.className = "demo-bot-message demo-typing-message";
+    typingMessage.innerHTML = `
+        <span>AI is typing</span>
+        <span class="typing-dots">
+            <span>.</span>
+            <span>.</span>
+            <span>.</span>
+        </span>
+    `;
+
+    chatContainer.appendChild(typingMessage);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+
+    return typingMessage;
+}
 // =========================
 // HEALTHCARE DEMO MODAL
 // =========================
@@ -308,7 +326,10 @@ const healthcareDemoModal = document.getElementById("healthcare-demo-modal");
 const healthcareDemoClose = document.getElementById("healthcare-demo-close");
 const healthcareDemoChat = document.getElementById("healthcare-demo-chat");
 const healthcareOptions = document.querySelectorAll(".healthcare-option");
-
+const healthcareMessageInput = document.getElementById("healthcare-message-input");
+const healthcareSendButton = document.getElementById("healthcare-send-button");
+const supportDemoButton = document.getElementById("support-demo-button");
+const supportDemoClose = document.getElementById("support-demo-close");
 function openHealthcareDemo() {
     if (!healthcareDemoModal) return;
 
@@ -326,6 +347,26 @@ function closeHealthcareDemo() {
 if (healthcareDemoButton) {
     healthcareDemoButton.addEventListener("click", openHealthcareDemo);
 }
+if (supportDemoClose) {
+    supportDemoClose.addEventListener("click", () => {
+        const supportDemoModal = document.getElementById("support-demo-modal");
+
+        if (supportDemoModal) {
+            supportDemoModal.classList.remove("active");
+            document.body.classList.remove("modal-open");
+        }
+    });
+}
+if (supportDemoButton) {
+    supportDemoButton.addEventListener("click", () => {
+        const supportDemoModal = document.getElementById("support-demo-modal");
+
+        if (supportDemoModal) {
+            supportDemoModal.classList.add("active");
+            document.body.classList.add("modal-open");
+        }
+    });
+}
 
 if (healthcareDemoClose) {
     healthcareDemoClose.addEventListener("click", closeHealthcareDemo);
@@ -338,7 +379,84 @@ if (healthcareDemoModal) {
         }
     });
 }
+if (
+    healthcareSendButton &&
+    healthcareMessageInput &&
+    healthcareDemoChat
+) {
+    healthcareSendButton.addEventListener("click", () => {
+        const message = healthcareMessageInput.value.trim();
 
+        if (!message) return;
+
+        healthcareDemoChat.insertAdjacentHTML(
+            "beforeend",
+            `
+            <div class="demo-user-message">
+                ${message}
+            </div>
+            `
+        );
+
+        healthcareMessageInput.value = "";
+
+        const typingMessage = showTypingIndicator(healthcareDemoChat);
+
+        setTimeout(() => {
+            typingMessage.remove();
+
+         let reply =
+    "Thanks for your message. I can help with business hours, insurance, and appointment booking.";
+
+const lowerMessage = message.toLowerCase();
+
+if (
+    lowerMessage === "hello" ||
+    lowerMessage === "hi" ||
+    lowerMessage === "hey" ||
+    lowerMessage.includes("good morning") ||
+    lowerMessage.includes("good afternoon") ||
+    lowerMessage.includes("good evening")
+) {
+    reply =
+        "Hello! Welcome to Ngum HealthCare. How may I assist you today?";
+} else if (
+    lowerMessage.includes("hour") ||
+    lowerMessage.includes("open")
+) {
+    reply =
+        "Ngum HealthCare is open Monday through Friday from 8:00 AM to 5:30 PM. We are closed on Saturdays and Sundays.";
+} else if (lowerMessage.includes("insurance")) {
+    reply =
+        "Yes, Ngum HealthCare accepts different types of insurance. Please contact the clinic to confirm whether your specific plan is accepted.";
+} else if (
+    lowerMessage.includes("appointment") ||
+    lowerMessage.includes("book")
+) {
+    reply =
+        "I can help with that. Please provide your preferred date, preferred time, full name, email address, and phone number.";
+}
+
+            healthcareDemoChat.insertAdjacentHTML(
+                "beforeend",
+                `
+                <div class="demo-bot-message">
+                    ${reply}
+                </div>
+                `
+            );
+
+            healthcareDemoChat.scrollTop =
+                healthcareDemoChat.scrollHeight;
+        }, 800);
+    });
+
+    healthcareMessageInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            healthcareSendButton.click();
+        }
+    });
+}
 document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
         closeHealthcareDemo();
@@ -362,20 +480,127 @@ healthcareOptions.forEach((button) => {
                 "I can help with that. Please provide your preferred date, preferred time, full name, email address, and phone number.";
         }
 
-        healthcareDemoChat.insertAdjacentHTML(
+       healthcareDemoChat.insertAdjacentHTML(
+    "beforeend",
+    `
+    <div class="demo-user-message">
+        ${question}
+    </div>
+    `
+);
+
+healthcareDemoChat.scrollTop = healthcareDemoChat.scrollHeight;
+
+const typingMessage = showTypingIndicator(healthcareDemoChat);
+
+setTimeout(() => {
+    typingMessage.remove();
+
+    healthcareDemoChat.insertAdjacentHTML(
+        "beforeend",
+        `
+        <div class="demo-bot-message">
+            ${reply}
+        </div>
+        `
+    );
+
+    healthcareDemoChat.scrollTop = healthcareDemoChat.scrollHeight;
+}, 1200);
+    });
+});
+// ==============================
+// CUSTOMER SUPPORT DEMO OPTIONS
+// ==============================
+
+const supportDemoChat = document.getElementById("support-demo-chat");
+const supportOptions = document.querySelectorAll(".support-option");
+const supportMessageInput = document.getElementById("support-message-input");
+const supportSendButton = document.getElementById("support-send-button");
+supportSendButton.addEventListener("click", () => {
+    const message = supportMessageInput.value.trim();
+
+    if (!message) return;
+
+    supportDemoChat.insertAdjacentHTML(
+        "beforeend",
+        `
+        <div class="demo-message user-message">
+            ${message}
+        </div>
+        `
+    );
+
+    let reply = "";
+
+    const text = message.toLowerCase();
+
+    if (text.includes("hello") || text.includes("hi") || text.includes("hey")) {
+        reply = "Hello! Welcome to Ngum Tech AI. How may I help you today?";
+    } else if (text.includes("services")) {
+        reply = "We provide AI receptionists, appointment booking, customer support chatbots, workflow automation and business consulting.";
+    } else if (text.includes("cost") || text.includes("price")) {
+        reply = "Our pricing depends on your business needs. We'd be happy to schedule a free consultation.";
+    } else if (text.includes("consultation") || text.includes("book")) {
+        reply = "Great! Please use the Book a Demo button and we'll contact you shortly.";
+    } else {
+        reply = "Thank you for your message. One of our AI specialists will be happy to assist you.";
+    }
+
+    const typingMessage = showTypingIndicator(supportDemoChat);
+
+setTimeout(() => {
+    typingMessage.remove();
+
+    supportDemoChat.insertAdjacentHTML(
+        "beforeend",
+        `
+        <div class="demo-bot-message">
+            ${reply}
+        </div>
+        `
+    );
+
+    supportDemoChat.scrollTop = supportDemoChat.scrollHeight;
+}, 1200);
+
+    supportMessageInput.value = "";
+});
+supportOptions.forEach((button) => {
+    button.addEventListener("click", () => {
+        const question = button.textContent.trim();
+
+        let reply = "";
+
+        if (question.includes("services")) {
+            reply =
+                "We offer AI receptionists, appointment booking automation, customer support chatbots, workflow automation, and business consulting.";
+        } else if (question.includes("cost")) {
+            reply =
+                "The cost depends on the size and complexity of the automation. We can provide a customized quote after a short consultation.";
+        } else if (question.includes("consultation")) {
+            reply =
+                "Great! Please use the Book a Demo button or contact form to schedule your consultation.";
+        } else {
+            reply =
+                "Thank you for your question. Our team can help you choose the right AI automation solution for your business.";
+        }
+
+        if (!supportDemoChat) return;
+
+        supportDemoChat.insertAdjacentHTML(
             "beforeend",
             `
-            <div class="demo-user-message">
+            <div class="demo-message user-message">
                 ${question}
             </div>
-
-            <div class="demo-bot-message">
+            <div class="demo-message bot-message">
                 ${reply}
             </div>
             `
         );
 
-        healthcareDemoChat.scrollTop = healthcareDemoChat.scrollHeight;
+        supportDemoChat.scrollTop = supportDemoChat.scrollHeight;
     });
 });
 // ==========================
@@ -387,6 +612,8 @@ const restaurantDemoModal = document.getElementById("restaurant-demo-modal");
 const restaurantDemoClose = document.getElementById("restaurant-demo-close");
 const restaurantDemoChat = document.getElementById("restaurant-demo-chat");
 const restaurantOptions = document.querySelectorAll(".restaurant-option");
+const restaurantMessageInput = document.getElementById("restaurant-message-input");
+const restaurantSendButton = document.getElementById("restaurant-send-button");
 
 function openRestaurantDemo() {
     if (!restaurantDemoModal) return;
@@ -456,6 +683,75 @@ document.addEventListener("keydown", (event) => {
         closeRestaurantDemo();
     }
 });
+restaurantSendButton.addEventListener("click", () => {
+
+    const message = restaurantMessageInput.value.trim();
+
+    if (!message) return;
+
+    restaurantDemoChat.insertAdjacentHTML(
+        "beforeend",
+        `
+        <div class="demo-user-message">
+            ${message}
+        </div>
+        `
+    );
+
+    restaurantMessageInput.value = "";
+
+    const typingMessage = showTypingIndicator(restaurantDemoChat);
+
+    setTimeout(() => {
+
+        typingMessage.remove();
+
+        let reply = "";
+        const text = message.toLowerCase();
+
+        if (
+            text.includes("hello") ||
+            text.includes("hi") ||
+            text.includes("hey")
+        ) {
+            reply = "Hello! Welcome to our Restaurant AI Assistant. How may I help you today?";
+        }
+        else if (text.includes("menu") || text.includes("food")) {
+            reply = "We can answer menu questions, recommend meals, and provide ingredient information.";
+        }
+        else if (text.includes("hours")) {
+            reply = "Our restaurant is open Monday–Sunday from 9:00 AM to 9:00 PM.";
+        }
+        else if (text.includes("order")) {
+            reply = "Great! Please tell me what you'd like to order, and I'll guide you through the process.";
+        }
+        else if (text.includes("delivery")) {
+            reply = "Yes! We offer both pickup and delivery depending on your location.";
+        }
+        else {
+            reply = "I'm happy to help with menu questions, business hours, placing orders, and delivery information.";
+        }
+
+        restaurantDemoChat.insertAdjacentHTML(
+            "beforeend",
+            `
+            <div class="demo-bot-message">
+                ${reply}
+            </div>
+            `
+        );
+
+        restaurantDemoChat.scrollTop = restaurantDemoChat.scrollHeight;
+
+    }, 1200);
+
+});
+
+restaurantMessageInput.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+        restaurantSendButton.click();
+    }
+});
 // ==========================
 // APPOINTMENT BOOKING DEMO
 // ==========================
@@ -465,6 +761,9 @@ const appointmentDemoModal = document.getElementById("appointment-demo-modal");
 const appointmentDemoClose = document.getElementById("appointment-demo-close");
 const appointmentDemoChat = document.getElementById("appointment-demo-chat");
 const appointmentOptions = document.querySelectorAll(".appointment-option");
+const appointmentMessageInput = document.getElementById("appointment-message-input");
+const appointmentSendButton = document.getElementById("appointment-send-button");
+
 
 function openAppointmentDemo() {
     if (!appointmentDemoModal) return;
@@ -535,82 +834,51 @@ document.addEventListener("keydown", (event) => {
         closeAppointmentDemo();
     }
 });
-// ==========================
-// CUSTOMER SUPPORT AI DEMO
-// ==========================
+appointmentSendButton.addEventListener("click", () => {
+    const message = appointmentMessageInput.value.trim();
 
-const supportDemoButton = document.getElementById("support-demo-button");
-const supportDemoModal = document.getElementById("support-demo-modal");
-const supportDemoClose = document.getElementById("support-demo-close");
-const supportDemoChat = document.getElementById("support-demo-chat");
-const supportOptions = document.querySelectorAll(".support-option");
+    if (!message) return;
 
-function openSupportDemo() {
-    if (!supportDemoModal) return;
+    appointmentDemoChat.insertAdjacentHTML(
+        "beforeend",
+        `
+        <div class="demo-message user-message">
+            ${message}
+        </div>
+        `
+    );
 
-    supportDemoModal.classList.add("active");
-    document.body.classList.add("modal-open");
-}
+    const text = message.toLowerCase();
+    let reply = "";
 
-function closeSupportDemo() {
-    if (!supportDemoModal) return;
-
-    supportDemoModal.classList.remove("active");
-    document.body.classList.remove("modal-open");
-}
-
-if (supportDemoButton) {
-    supportDemoButton.addEventListener("click", openSupportDemo);
-}
-
-if (supportDemoClose) {
-    supportDemoClose.addEventListener("click", closeSupportDemo);
-}
-
-if (supportDemoModal) {
-    supportDemoModal.addEventListener("click", (event) => {
-        if (event.target === supportDemoModal) {
-            closeSupportDemo();
-        }
-    });
-}
-
-supportOptions.forEach((button) => {
-    button.addEventListener("click", () => {
-        const question = button.textContent.trim();
-
-        let reply = "";
-
-        if (question.includes("What services do you offer")) {
-            reply =
-                "Ngum Tech AI provides AI receptionists, appointment-booking automation, customer-support chatbots, workflow automation, and custom AI solutions for businesses.";
-        } else if (question.includes("How much does AI automation cost")) {
-            reply =
-                "Pricing depends on the workflow, integrations, and level of customization. We begin with a consultation to understand your goals and recommend the right solution.";
-        } else if (question.includes("schedule a consultation")) {
-            reply =
-                "Great! You can use the Book a Demo button to send your details and request a consultation with Ngum Tech AI.";
-        }
-
-        supportDemoChat.insertAdjacentHTML(
-            "beforeend",
-            `
-            <div class="demo-user-message">
-                ${question}
-            </div>
-
-            <div class="demo-bot-message">
-                ${reply}
-            </div>
-            `
-        );
-
-        supportDemoChat.scrollTop = supportDemoChat.scrollHeight;
-    });
-});
-
-document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-        closeSupportDemo();
+    if (text.includes("hello") || text.includes("hi") || text.includes("hey")) {
+        reply = "Hello! Welcome to the Appointment Booking AI demo. How may I assist you today?";
+    } else if (text.includes("available") || text.includes("time")) {
+        reply = "I can help you check available appointment times. Please tell me your preferred day and time.";
+    } else if (text.includes("book") || text.includes("appointment")) {
+        reply = "Great! Please provide your name, preferred date, and preferred time.";
+    } else if (text.includes("reschedule")) {
+        reply = "Certainly. Please provide your current appointment time and the new time you prefer.";
+    } else {
+        reply = "I can help you check availability, book an appointment, or reschedule an existing appointment.";
     }
+
+    const typingMessage = showTypingIndicator(appointmentDemoChat);
+
+setTimeout(() => {
+    typingMessage.remove();
+
+    appointmentDemoChat.insertAdjacentHTML(
+        "beforeend",
+        `
+        <div class="demo-bot-message">
+            ${reply}
+        </div>
+        `
+    );
+
+    appointmentDemoChat.scrollTop = appointmentDemoChat.scrollHeight;
+}, 1200);
+
+    appointmentMessageInput.value = "";
 });

@@ -1756,10 +1756,15 @@ AI AUTOMATION ACADEMY
 
 .demo-modal-content {
     position: relative;
-    width: 100%;
-    max-width: 650px;
-    max-height: 90vh;
-    overflow-y: auto;
+    width: 95%;
+    max-width: 850px;
+    height: 650;
+    max-height: 80vh;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
     background: #ffffff;
     border-radius: 20px;
     box-shadow: 0 25px 60px rgba(15, 23, 42, 0.3);
@@ -1806,19 +1811,34 @@ AI AUTOMATION ACADEMY
 }
 
 .demo-chat-body {
-    padding: 28px;
-    background: #f8fafc;
+  max-height: 430;
+  min-height: 360px;  /* THIS is the missing piece */
+  padding: 20px;
+  background: #f8fafc;
+  overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.demo-chat-body > * {
+    margin-bottom: 10px;
 }
 
 .demo-bot-message {
-    max-width: 85%;
-    padding: 15px 18px;
-    margin-bottom: 22px;
-    border-radius: 16px 16px 16px 4px;
+    max-width: 75%;
+    margin-bottom: 14px;
+
+    padding: 12px 16px;
+    border-radius: 18px;
+
     background: #ffffff;
     color: #1f2937;
-    line-height: 1.6;
-    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.08);
+
+    font-size: 14px;
+    line-height: 1.4;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .demo-suggestions {
@@ -1872,13 +1892,18 @@ body.modal-open {
     }
 }
 .demo-user-message {
-    max-width: 85%;
-    margin: 0 0 16px auto;
-    padding: 15px 18px;
-    border-radius: 16px 16px 4px 16px;
-    background: #2563eb;
+    max-width: 75%;
+    margin-left: auto;
+    margin-bottom: 14px;
+
+    padding: 12px 16px;
+    border-radius: 18px;
+
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: #ffffff;
-    line-height: 1.6;
+
+    font-size: 14px;
+    line-height: 1.4;
 }
 /* Make Healthcare and Restaurant demo options match */
 .healthcare-option,
@@ -1907,4 +1932,233 @@ body.modal-open {
     border-color: #2563eb;
     background: #eff6ff;
     transform: translateY(-1px);
+}
+.demo-chat-input {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 14px 16px;
+    border-top: 1px solid #e5e7eb;
+    background: #ffffff;
+}
+
+.demo-chat-input input{
+    flex: 1;
+    height: 44px;
+    padding: 0 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.demo-chat-input button{
+    height: 44px;
+    min-width: 90px;
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.demo-chat-input button:hover{
+    background:#1d4ed8;
+}
+.demo-chat-input{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.demo-chat-input input{
+    flex:1;
+    height: 46;
+    padding: 0 12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+    outline: none;
+}
+
+.demo-chat-input button{
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:12px 20px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.demo-chat-input button:hover{
+    background:#1d4ed8;
+}
+.chat-input-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px;
+    border-top: 1px solid #ddd;
+    background: #fff;
+}
+.chat-input-area button {
+    height: 46px;
+    min-width: 90px;
+    padding: 0 20px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.chat-input-area input:focus {
+    border-color: #2563eb;
+}
+
+.chat-input-area button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.chat-input-area button:hover {
+    background: #1d4ed8;
+}
+.chat-input-area {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+}
+
+.chat-input-area input {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.chat-input-area button {
+    height: 46px;
+    min-width: 90px;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+/* Final Healthcare modal layout */
+#healthcare-demo-modal .demo-modal-content {
+    height: fit-content !important;
+    min-height: 0 !important;
+    max-height: 90vh !important;
+}
+
+#healthcare-demo-modal #healthcare-demo-chat {
+    flex: 0 0 auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 420px !important;
+    overflow-y: auto;
+    justify-content: flex-start !important;
+}
+
+#healthcare-demo-modal .demo-chat-input {
+    flex: 0 0 auto !important;
+    margin-top: 0 !important;
+}
+.demo-chat-input button{
+    height: 44px;
+    min-width: 90px;
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+/* Appointment Booking modal */
+
+#appointment-demo-modal .demo-modal-content {
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    max-height: 700px;
+}
+
+#appointment-demo-chat {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+#appointment-demo-modal .demo-chat-input {
+    flex-shrink: 0;
+    margin-top: 0;
+}
+/* AI typing indicator */
+
+.demo-typing-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+}
+
+.typing-dots {
+    display: inline-flex;
+    gap: 4px;
+}
+
+.typing-dots span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #64748b;
+    animation: typingBounce 1.2s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.typing-dots span:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+@keyframes typingBounce {
+    0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 0.5;
+    }
+
+    30% {
+        transform: translateY(-5px);
+        opacity: 1;
+    }
 }
