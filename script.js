@@ -882,3 +882,30 @@ setTimeout(() => {
 
     appointmentMessageInput.value = "";
 });
+// ===============================
+// Google Analytics Event Tracking
+// ===============================
+
+const navBookDemo = document.getElementById("navBookDemo");
+const heroBookDemo = document.getElementById("heroBookDemo");
+
+function trackBookDemo(location) {
+    if (typeof gtag === "function") {
+        gtag("event", "book_demo_click", {
+            event_category: "Engagement",
+            event_label: location
+        });
+    }
+}
+
+if (navBookDemo) {
+    navBookDemo.addEventListener("click", () => {
+        trackBookDemo("Navigation");
+    });
+}
+
+if (heroBookDemo) {
+    heroBookDemo.addEventListener("click", () => {
+        trackBookDemo("Hero");
+    });
+}

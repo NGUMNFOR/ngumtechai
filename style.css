@@ -1840,6 +1840,35 @@ AI AUTOMATION ACADEMY
 
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
+.demo-bot-message,
+.demo-user-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.demo-bot-message::before,
+.demo-user-message::before {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 17px;
+    line-height: 1;
+}
+
+.demo-bot-message::before {
+    content: "🤖";
+    background: #e0e7ff;
+}
+
+.demo-user-message::before {
+    content: "👤";
+    background: rgba(255, 255, 255, 0.2);
+}
 
 .demo-suggestions {
     display: grid;
