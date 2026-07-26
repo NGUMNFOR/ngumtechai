@@ -68,7 +68,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     <!-- CSS -->
     <link rel="stylesheet" href="style.css?v=10">
-
+<link
+  href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css"
+  rel="stylesheet"
+/>
 </head>
 
 <body>
@@ -128,7 +131,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <a href="#contact" id="heroBookDemo" class="btn-primary">
     Book a Demo
 </a>
-            <a href="contact" class="btn-secondary">
+            <a href="" class="btn-secondary">
                 View Portfolio
             </a>
         </div>
@@ -493,6 +496,154 @@ BLOCK 12 – CASE STUDIES
     </div>
 
 </section>
+<!-- ========================================
+BLOCK 11 - PRICING
+======================================== -->
+
+<section id="pricing" class="pricing">
+
+    <div class="section-title">
+        <h2>Simple Pricing</h2>
+        <p>Choose the AI solution that best fits your business.</p>
+    </div>
+
+    <div class="pricing-grid">
+
+        <div class="pricing-card">
+            <h3>Starter</h3>
+            <div class="price">$499</div>
+            <p>Perfect for small businesses.</p>
+
+            <ul>
+                <li>✓ AI Chatbot</li>
+                <li>✓ Contact Form Automation</li>
+                <li>✓ Email Notifications</li>
+                <li>✓ 30 Days Support</li>
+            </ul>
+
+            <a href="#contact" class="btn">Get Started</a>
+        </div>
+
+        <div class="pricing-card featured">
+            <span class="popular">Most Popular</span>
+
+            <h3>Business</h3>
+            <div class="price">$999</div>
+
+            <p>Complete AI automation for growing businesses.</p>
+
+            <ul>
+                <li>✓ AI Receptionist</li>
+                <li>✓ Appointment Booking</li>
+                <li>✓ CRM Integration</li>
+                <li>✓ Email Automation</li>
+                <li>✓ 60 Days Support</li>
+            </ul>
+
+            <a href="#contact" class="btn">Book a Consultation</a>
+        </div>
+
+        <div class="pricing-card">
+            <h3>Enterprise</h3>
+
+            <div class="price">Custom</div>
+
+            <p>Tailored AI solutions for larger organizations.</p>
+
+            <ul>
+                <li>✓ Everything in Business</li>
+                <li>✓ Custom AI Workflows</li>
+                <li>✓ API Integrations</li>
+                <li>✓ Priority Support</li>
+            </ul>
+
+            <a href="#contact" class="btn">Contact Us</a>
+        </div>
+
+    </div>
+
+</section>
+<!-- ==========================================
+     FAQ SECTION
+========================================== -->
+<section id="faq" class="faq">
+
+    <div class="section-title">
+        <h2>Frequently Asked Questions</h2>
+        <p>Answers to common questions about our AI automation services.</p>
+    </div>
+
+    <div class="faq-container">
+
+        <div class="faq-item">
+            <button class="faq-question" type="button">
+                How long does it take to build an AI automation solution?
+                <span>+</span>
+            </button>
+            <div class="faq-answer">
+                <p>
+                    Most small and medium-sized projects take between one and four weeks,
+                    depending on the complexity and integrations required.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" type="button">
+                Do I need technical knowledge to use the system?
+                <span>+</span>
+            </button>
+            <div class="faq-answer">
+                <p>
+                    No. We build the system, connect the tools, and show you how to use it.
+                    The final solution is designed to be simple for your team.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" type="button">
+                Can AI connect with my current business software?
+                <span>+</span>
+            </button>
+            <div class="faq-answer">
+                <p>
+                    Yes. We can connect AI with tools such as Google Workspace,
+                    CRMs, calendars, email platforms, websites, and many other applications.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" type="button">
+                Which industries do you serve?
+                <span>+</span>
+            </button>
+            <div class="faq-answer">
+                <p>
+                    We work with healthcare providers, restaurants, professional services,
+                    local businesses, and other organizations that want to save time and improve customer service.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" type="button">
+                Do you provide support after the project is completed?
+                <span>+</span>
+            </button>
+            <div class="faq-answer">
+                <p>
+                    Yes. Support options depend on the selected package and may include
+                    troubleshooting, updates, monitoring, and workflow improvements.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
 <!-- =============================================
      BLOCK 11 - CONTACT
 ============================================= -->
@@ -972,6 +1123,87 @@ AI CHAT WIDGET
     </div>
 
 </div>
+<!-- Demo Booking Modal -->
+<div class="booking-modal" id="bookingModal">
+    <div class="booking-content">
+        <span class="booking-close" id="bookingClose">&times;</span>
+
+        <h2>Book Your Free AI Consultation</h2>
+        <p>Tell us about your business and we'll contact you shortly.</p>
+
+        <form id="bookingForm">
+
+            <input
+                type="text"
+                placeholder="Full Name"
+                required>
+
+            <input
+                type="text"
+                placeholder="Business Name">
+
+            <input
+                type="email"
+                placeholder="Email Address"
+                required>
+
+            <input
+                type="tel"
+                placeholder="Phone Number">
+
+            <select id="businessType" required>
+    <option value="">Business Type</option>
+    <option value="Healthcare">Healthcare</option>
+    <option value="Restaurant">Restaurant</option>
+    <option value="Law Firm">Law Firm</option>
+    <option value="Real Estate">Real Estate</option>
+    <option value="Retail">Retail</option>
+    <option value="Other">Other</option>
+</select>
+
+<input
+    type="text"
+    id="otherBusinessType"
+    placeholder="Enter your business type"
+    style="display: none;">
+
+            <select id="aiSolution" required>
+    <option value="">AI Solution Needed</option>
+    <option value="AI Receptionist">AI Receptionist</option>
+    <option value="AI Chatbot">AI Chatbot</option>
+    <option value="Workflow Automation">Workflow Automation</option>
+    <option value="Appointment Booking">Appointment Booking</option>
+    <option value="Other">Other</option>
+</select>
+
+<input
+    type="text"
+    id="otherAiSolution"
+    placeholder="Describe the AI solution you need"
+    style="display: none;">
+
+            <input
+                type="date"
+                required>
+
+            <input
+                type="time"
+                required>
+
+            <textarea
+                rows="5"
+                placeholder="Tell us about your project..."></textarea>
+
+            <button
+                type="submit"
+                class="btn-primary">
+                Book My Demo
+            </button>
+
+        </form>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="script.js"></script>
 
 </body>

@@ -909,3 +909,113 @@ if (heroBookDemo) {
         trackBookDemo("Hero");
     });
 }
+// =================================
+// Demo Booking Modal
+// =================================
+
+const bookingModal = document.getElementById("bookingModal");
+const bookingClose = document.getElementById("bookingClose");
+const navBookDemoButton = document.getElementById("navBookDemo");
+const heroBookDemoButton = document.getElementById("heroBookDemo");
+
+function openBookingModal(event) {
+    event.preventDefault();
+
+    if (bookingModal) {
+        bookingModal.classList.add("active");
+        document.body.style.overflow = "hidden";
+    }
+}
+
+function closeBookingModal() {
+    if (bookingModal) {
+        bookingModal.classList.remove("active");
+        document.body.style.overflow = "";
+    }
+}
+
+if (navBookDemoButton) {
+    navBookDemoButton.addEventListener("click", openBookingModal);
+}
+
+if (heroBookDemoButton) {
+    heroBookDemoButton.addEventListener("click", openBookingModal);
+}
+
+if (bookingClose) {
+    bookingClose.addEventListener("click", closeBookingModal);
+}
+
+if (bookingModal) {
+    bookingModal.addEventListener("click", (event) => {
+        if (event.target === bookingModal) {
+            closeBookingModal();
+        }
+    });
+}
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+        closeBookingModal();
+    }
+});
+// =================================
+// Show custom fields for "Other"
+// =================================
+
+const businessType = document.getElementById("businessType");
+const otherBusinessType = document.getElementById("otherBusinessType");
+
+const aiSolution = document.getElementById("aiSolution");
+const otherAiSolution = document.getElementById("otherAiSolution");
+
+if (businessType && otherBusinessType) {
+    businessType.addEventListener("change", () => {
+        if (businessType.value === "Other") {
+            otherBusinessType.style.display = "block";
+            otherBusinessType.required = true;
+        } else {
+            otherBusinessType.style.display = "none";
+            otherBusinessType.required = false;
+            otherBusinessType.value = "";
+        }
+    });
+}
+
+if (aiSolution && otherAiSolution) {
+    aiSolution.addEventListener("change", () => {
+        if (aiSolution.value === "Other") {
+            otherAiSolution.style.display = "block";
+            otherAiSolution.required = true;
+        } else {
+            otherAiSolution.style.display = "none";
+            otherAiSolution.required = false;
+            otherAiSolution.value = "";
+        }
+    });
+}
+/* ==========================================
+   FAQ ACCORDION
+========================================== */
+
+const faqItems = document.querySelectorAll(".faq-item");
+
+faqItems.forEach((item) => {
+    const button = item.querySelector(".faq-question");
+
+    button.addEventListener("click", () => {
+
+        if (item.classList.contains("active")) {
+            item.classList.remove("active");
+        } else {
+
+            faqItems.forEach((faq) => {
+                faq.classList.remove("active");
+            });
+
+            item.classList.add("active");
+        }
+
+    });
+});
+
