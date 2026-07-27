@@ -1018,4 +1018,20 @@ faqItems.forEach((item) => {
 
     });
 });
+// ==========================================
+// Track Strategy Session Form Submission
+// ==========================================
+
+const strategySessionForm = document.querySelector(".contact-form");
+
+if (strategySessionForm) {
+    strategySessionForm.addEventListener("submit", () => {
+        if (typeof gtag === "function") {
+            gtag("event", "strategy_session_form_submit", {
+                form_name: "Free AI Strategy Session"
+            });
+        }
+    });
+}
+
 
