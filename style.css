@@ -2666,3 +2666,200 @@ body.modal-open {
 .academy-topics li::marker {
     color: #2563eb;
 }
+/* ==========================================
+   AI RECEPTIONIST DEMO PAGE
+========================================== */
+
+.demo-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 8%;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.demo-page-logo {
+    color: #2563eb;
+    font-size: 24px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.demo-back-link {
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.receptionist-demo-page {
+    min-height: calc(100vh - 80px);
+    padding: 80px 20px;
+    background: #f8fafc;
+}
+
+.demo-page-intro {
+    max-width: 760px;
+    margin: 0 auto 45px;
+    text-align: center;
+}
+
+.demo-page-label {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #2563eb;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.demo-page-intro h1 {
+    margin-bottom: 18px;
+    color: #111827;
+    font-size: 48px;
+}
+
+.demo-page-intro p {
+    color: #6b7280;
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+.receptionist-demo-card {
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 55px 40px;
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+}
+
+.receptionist-demo-icon {
+    margin-bottom: 20px;
+    font-size: 55px;
+}
+
+.receptionist-demo-card h2 {
+    margin-bottom: 16px;
+    color: #111827;
+    font-size: 30px;
+}
+
+.receptionist-demo-card p {
+    margin-bottom: 28px;
+    color: #6b7280;
+    line-height: 1.7;
+}
+
+.demo-coming-soon-button {
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+@media (max-width: 600px) {
+    .demo-page-header {
+        padding: 16px 20px;
+    }
+
+    .demo-page-logo {
+        font-size: 20px;
+    }
+
+    .demo-back-link {
+        font-size: 14px;
+    }
+
+    .receptionist-demo-page {
+        padding: 50px 16px;
+    }
+
+    .demo-page-intro h1 {
+        font-size: 34px;
+    }
+
+    .demo-page-intro p {
+        font-size: 16px;
+    }
+
+    .receptionist-demo-card {
+        padding: 40px 22px;
+    }
+}
+/* ===========================
+   AI Receptionist Chat
+=========================== */
+
+.demo-chat{
+    max-width:700px;
+    margin:30px auto;
+    background:#ffffff;
+    border-radius:18px;
+    box-shadow:0 12px 35px rgba(0,0,0,.08);
+    overflow:hidden;
+}
+
+.chat-messages{
+    height:420px;
+    padding:25px;
+    overflow-y:auto;
+    background:#f8faff;
+}
+
+.bot-message,
+.user-message{
+    max-width:80%;
+    padding:14px 18px;
+    margin-bottom:18px;
+    border-radius:16px;
+    line-height:1.6;
+    font-size:16px;
+}
+
+.bot-message{
+    background:#edf4ff;
+    color:#1f2937;
+}
+
+.user-message{
+    background:#2563eb;
+    color:#fff;
+    margin-left:auto;
+}
+
+.chat-input{
+    display:flex;
+    gap:12px;
+    padding:20px;
+    border-top:1px solid #e5e7eb;
+    background:#fff;
+}
+
+.chat-input input{
+    flex:1;
+    padding:14px 16px;
+    border:1px solid #d1d5db;
+    border-radius:12px;
+    font-size:16px;
+    outline:none;
+}
+
+.chat-input input:focus{
+    border-color:#2563eb;
+}
+
+.chat-input button{
+    padding:14px 28px;
+    border:none;
+    border-radius:12px;
+    background:#2563eb;
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.chat-input button:hover{
+    background:#1d4ed8;
+}
