@@ -2551,13 +2551,19 @@ body.modal-open {
 }
 
 .solution-link {
-    color: #1d4ed8;
+    display: inline-block;
+    background: #2563eb;
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 8px;
     font-weight: 700;
     text-decoration: none;
+    margin-top: 5px;
 }
-
 .solution-link:hover {
-    text-decoration: underline;
+    background: #1d4ed8;
+    color: #ffffff;
+    transform: translateY(-2px);
 }
 
 @media (max-width: 992px) {
