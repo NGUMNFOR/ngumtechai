@@ -2893,3 +2893,26 @@ body.modal-open {
     color:#475569;
     line-height:1.6;
 }
+.sms-consent{
+    margin:18px 0;
+}
+
+.sms-consent label{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    line-height:1.5;
+    font-size:14px;
+}
+
+.sms-consent input[type="checkbox"]{
+    width:18px;
+    height:18px;
+    margin-top:3px;
+    flex-shrink:0;
+}
+
+.sms-consent a{
+    color:#2563eb;
+    text-decoration:underline;
+}
