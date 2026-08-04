@@ -108,69 +108,27 @@ Ask me anything about our AI automation services.
         </section>
 
     </main>
-<script>
-const chatMessages = document.getElementById("chatMessages");
-const userInput = document.getElementById("userInput");
-const sendBtn = document.getElementById("sendBtn");
+<script
+    type="module"
+    src="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js">
+</script>
 
-function addMessage(message, sender){
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css"
+/>
 
-    const div = document.createElement("div");
+<script type="module">
+import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
 
-    div.className = sender + "-message";
-
-    div.innerHTML = message;
-
-    chatMessages.appendChild(div);
-
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-function botReply(text) {
-    const message = text.toLowerCase();
-
-    let reply =
-        "Thank you for your message! One of our AI specialists will be happy to help you.";
-
-    if (message.includes("hello") || message.includes("hi")) {
-        reply = "Hello! 👋 Welcome to Ngum Tech AI. How can I assist you today?";
-    } else if (message.includes("services")) {
-        reply = "We build AI Receptionists, AI Chatbots, Voice AI Agents, Workflow Automation, and Business AI Solutions.";
-    } else if (message.includes("price") || message.includes("cost")) {
-        reply = "Our AI solutions are customized for every business. You can book a free strategy session for a personalized quote.";
-    } else if (message.includes("appointment") || message.includes("book")) {
-        reply = "I'd be happy to help you schedule a free consultation. Please use the Contact form on our website.";
-    }
-
-    setTimeout(() => {
-        addMessage(reply, "bot");
-    }, 600);
-}
-    
-
-
-
-sendBtn.addEventListener("click",function(){
-
-    const text = userInput.value.trim();
-
-    if(text==="") return;
-
-    addMessage(text,"user");
-
-    botReply(text);
-
-    userInput.value="";
-
-});
-
-userInput.addEventListener("keypress",function(e){
-
-    if(e.key==="Enter"){
-
-        sendBtn.click();
-
-    }
-
+createChat({
+    webhookUrl: "https://n8n.ngumtechai.com/webhook/01814786-d791-453a-bae2-531d06047ba9/chat",
+    mode: "window",
+    initialMessages: [
+        "👋 Welcome to Ngum Tech AI!",
+        "How can I help you today?"
+    ],
+    target: "#demo-chat"
 });
 </script>
 </body>
