@@ -46,38 +46,13 @@
         </section>
 
         <section class="receptionist-demo-card">
+            <div id="n8n-chat"></div>
 
             <h2>🤖 Meet Your AI Receptionist</h2>
 
 <p>
 Ask me anything about our AI automation services.
 </p>
-
-<div class="demo-chat">
-
-    <div id="chatMessages" class="chat-messages">
-
-        <div class="bot-message">
-            👋 Hello! I'm your AI Receptionist.
-            <br><br>
-            How can I help you today?
-        </div>
-
-    </div>
-
-    <div class="chat-input">
-
-        <input
-            type="text"
-            id="userInput"
-            placeholder="Type your message..."
-        >
-
-        <button id="sendBtn">
-            Send
-        </button>
-
-    </div>
 
 <div class="demo-next-step">
     <h3>Ready to automate your business?</h3>
@@ -108,10 +83,6 @@ Ask me anything about our AI automation services.
         </section>
 
     </main>
-<script
-    type="module"
-    src="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js">
-</script>
 
 <link
     rel="stylesheet"
@@ -123,12 +94,12 @@ import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bun
 
 createChat({
     webhookUrl: "https://n8n.ngumtechai.com/webhook/01814786-d791-453a-bae2-531d06047ba9/chat",
-    mode: "window",
     initialMessages: [
         "👋 Welcome to Ngum Tech AI!",
         "How can I help you today?"
     ],
-    target: "#demo-chat"
+    target: "#n8n-chat",
+    mode: "fullscreen"
 });
 </script>
 </body>
