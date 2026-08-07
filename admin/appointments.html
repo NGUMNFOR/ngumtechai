@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ngum Tech AI | Appointments</title>
+
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+        <aside class="sidebar">
+            <h2>Ngum Tech AI</h2>
+
+            <nav>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="appointments.html" class="active">Appointments</a>
+                <a href="customers.html">Customers</a>
+                <a href="analytics.html">Analytics</a>
+                <a href="settings.html">Settings</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <h1>Appointments</h1>
+                    <p>Manage schedules, bookings, cancellations, and AI recommendations.</p>
+                </div>
+
+                <div class="admin-profile">
+                    <span>Admin</span>
+                </div>
+            </header>
+
+            <section class="stats-grid">
+
+                <div class="stat-card">
+                    <h3>Today's Appointments</h3>
+                    <h2>12</h2>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Upcoming</h3>
+                    <h2>24</h2>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Completed</h3>
+                    <h2>87%</h2>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Cancelled</h3>
+                    <h2>3</h2>
+                </div>
+
+            </section>
+
+        <section class="dashboard-section">
+
+    <div class="section-header">
+        <div>
+            <h2>Today's Schedule</h2>
+            <p>Appointments scheduled for today.</p>
+        </div>
+
+        <button type="button" class="view-all-button">
+            View Calendar
+        </button>
+    </div>
+
+    <div class="table-wrapper">
+
+        <table class="appointments-table">
+
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Patient</th>
+                    <th>Service</th>
+                    <th>Provider</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+           <table class="appointments-table">
+    <thead>
+        <tr>
+            <th>Time</th>
+            <th>Patient</th>
+            <th>Service</th>
+            <th>Provider</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+
+    <tbody id="appointmentsTableBody">
+    </tbody>
+</table>
+        </table>
+
+    </div>
+
+</section>
+<section class="dashboard-section">
+
+    <div class="section-header">
+        <div>
+            <h2>Upcoming Appointments</h2>
+            <p>Future bookings and reminder status.</p>
+        </div>
+
+        <button type="button" class="view-all-button">
+            View All
+        </button>
+    </div>
+
+    <div class="table-wrapper">
+
+        <table class="appointments-table">
+
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Patient</th>
+                    <th>Service</th>
+                    <th>Provider</th>
+                    <th>Reminder</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>August 7, 2026</td>
+                    <td>10:00 AM</td>
+                    <td>Jane Doe</td>
+                    <td>Consultation</td>
+                    <td>Dr. Williams</td>
+                    <td><span class="status status-confirmed">Sent</span></td>
+                </tr>
+
+                <tr>
+                    <td>August 8, 2026</td>
+                    <td>2:00 PM</td>
+                    <td>Michael Lee</td>
+                    <td>Cleaning</td>
+                    <td>Dr. Adams</td>
+                    <td><span class="status status-pending">Pending</span></td>
+                </tr>
+
+                <tr>
+                    <td>August 10, 2026</td>
+                    <td>11:30 AM</td>
+                    <td>Sarah Brown</td>
+                    <td>Follow-up</td>
+                    <td>Dr. Carter</td>
+                    <td><span class="status status-cancelled">Not Sent</span></td>
+                </tr>
+
+                <tr>
+                    <td>August 11, 2026</td>
+                    <td>9:00 AM</td>
+                    <td>Robert Lee</td>
+                    <td>Yearly Physical</td>
+                    <td>Dr. Williams</td>
+                    <td><span class="status status-confirmed">Sent</span></td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+<section class="dashboard-section">
+    <div class="section-header">
+        <div>
+            <h2>AI Scheduling Insights</h2>
+            <p>AI generated scheduling recommendations.</p>
+        </div>
+    </div>
+
+    <div class="customer-grid">
+
+        <div class="customer-card">
+            <h3>Today's Capacity</h3>
+            <p><strong>78%</strong> of appointment slots are booked.</p>
+            <p>6 slots remain available.</p>
+        </div>
+
+        <div class="customer-card">
+            <h3>Missed Appointments</h3>
+            <p>2 patients missed appointments this week.</p>
+            <p>Estimated revenue loss: <strong>$350</strong>.</p>
+        </div>
+
+        <div class="customer-card">
+            <h3>Reminder Status</h3>
+            <p>18 reminders sent today.</p>
+            <p>96% delivery success.</p>
+        </div>
+
+        <div class="customer-card">
+            <h3>AI Recommendation</h3>
+            <p>Offer afternoon appointments to reduce morning congestion.</p>
+            <p>Expected improvement: <strong>15%</strong>.</p>
+        </div>
+
+    </div>
+</section>
+<section class="dashboard-section">
+
+    <div class="section-header">
+        <div>
+            <h2>Monthly Appointment Calendar</h2>
+            <p>View scheduled appointments by date.</p>
+        </div>
+
+        <button type="button" class="view-all-button">
+            August 2026
+        </button>
+    </div>
+
+    <div class="calendar-grid">
+
+        <div class="calendar-day calendar-heading">Sun</div>
+        <div class="calendar-day calendar-heading">Mon</div>
+        <div class="calendar-day calendar-heading">Tue</div>
+        <div class="calendar-day calendar-heading">Wed</div>
+        <div class="calendar-day calendar-heading">Thu</div>
+        <div class="calendar-day calendar-heading">Fri</div>
+        <div class="calendar-day calendar-heading">Sat</div>
+
+        <div class="calendar-day empty-day"></div>
+        <div class="calendar-day empty-day"></div>
+        <div class="calendar-day empty-day"></div>
+        <div class="calendar-day empty-day"></div>
+        <div class="calendar-day empty-day"></div>
+        <div class="calendar-day empty-day"></div>
+
+        <div class="calendar-day">
+            <span>1</span>
+        </div>
+
+        <div class="calendar-day">
+            <span>2</span>
+        </div>
+
+        <div class="calendar-day">
+            <span>3</span>
+        </div>
+
+        <div class="calendar-day">
+            <span>4</span>
+        </div>
+
+        <div class="calendar-day">
+            <span>5</span>
+            <small>2 appointments</small>
+        </div>
+
+        <div class="calendar-day booked-day">
+            <span>6</span>
+            <small>4 appointments</small>
+        </div>
+
+        <div class="calendar-day booked-day">
+            <span>7</span>
+            <small>3 appointments</small>
+        </div>
+
+        <div class="calendar-day">
+            <span>8</span>
+            <small>2 appointments</small>
+        </div>
+
+        <div class="calendar-day">
+            <span>9</span>
+        </div>
+
+        <div class="calendar-day booked-day">
+            <span>10</span>
+            <small>5 appointments</small>
+        </div>
+
+        <div class="calendar-day">
+            <span>11</span>
+            <small>1 appointment</small>
+        </div>
+
+        <div class="calendar-day">
+            <span>12</span>
+        </div>
+
+        <div class="calendar-day">
+            <span>13</span>
+        </div>
+
+        <div class="calendar-day">
+            <span>14</span>
+            <small>2 appointments</small>
+        </div>
+
+        <div class="calendar-day">
+            <span>15</span>
+        </div>
+
+        <div class="calendar-day">
+            <span>16</span>
+        </div>
+
+        <div class="calendar-day">
+            <span>17</span>
+        </div>
+
+        <div class="calendar-day booked-day">
+            <span>18</span>
+            <small>4 appointments</small>
+        </div>
+
+        <div class="calendar-day">
+            <span>19</span>
+        </div>
+
+        <div class="calendar-day">
+            <span>20</span>
+            <small>2 appointments</small>
+        </div>
+
+        <div class="calendar-day">
+            <span>21</span>
+        </div>
+
+        <div class="calendar-day">
+            <span>22</span>
+        </div>
+
+        <div class="calendar-day">
+            <span>23</span>
+        </div>
+
+        <div class="calendar-day">
+            <span>24</span>
+        </div>
+
+        <div class="calendar-day">
+            <span>25</span>
+        </div>
+
+        <div class="calendar-day">
+            <span>26</span>
+        </div>
+
+        <div class="calendar-day">
+            <span>27</span>
+        </div>
+
+        <div class="calendar-day">
+            <span>28</span>
+        </div>
+
+        <div class="calendar-day">
+            <span>29</span>
+        </div>
+
+        <div class="calendar-day">
+            <span>30</span>
+        </div>
+
+        <div class="calendar-day">
+            <span>31</span>
+        </div>
+
+    </div>
+
+</section>
+    </div>
+
+    <script src="js/admin.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings | Ngum Tech AI</title>
+
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+        <aside class="sidebar">
+
+            <h2>Ngum Tech AI</h2>
+
+            <nav>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="appointments.html">Appointments</a>
+                <a href="customers.html">Customers</a>
+                <a href="analytics.html">Analytics</a>
+                <a href="settings.html" class="active">Settings</a>
+            </nav>
+
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <h1>Settings</h1>
+                    <p>Manage your business, appointment, notification, and AI automation settings.</p>
+                </div>
+
+                <div class="admin-profile">
+                    <span>Admin</span>
+                </div>
+            </header>
+
+            <section class="dashboard-section">
+
+                <div class="section-header">
+                    <div>
+                        <h2>Business Information</h2>
+                        <p>Manage the information used across your admin system.</p>
+                    </div>
+                </div>
+
+                <div class="settings-grid">
+
+                    <div class="settings-card">
+                        <h3>Business Profile</h3>
+
+                        <label>Business Name</label>
+                        <input type="text" value="Ngum Tech AI">
+
+                        <label>Business Email</label>
+                        <input type="email" placeholder="admin@example.com">
+
+                        <label>Phone Number</label>
+                        <input type="tel" placeholder="Business phone number">
+
+                        <button type="button" class="settings-save-btn">
+                            Save Profile
+                        </button>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Business Hours</h3>
+
+                        <label>Opening Time</label>
+                        <input type="time" value="08:00">
+
+                        <label>Closing Time</label>
+                        <input type="time" value="17:30">
+
+                        <label>Time Zone</label>
+                        <select>
+                            <option>America/New_York</option>
+                        </select>
+
+                        <button type="button" class="settings-save-btn">
+                            Save Hours
+                        </button>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Appointment Settings</h3>
+
+                        <label>Default Appointment Length</label>
+                        <select>
+                            <option>30 minutes</option>
+                            <option>45 minutes</option>
+                            <option>60 minutes</option>
+                        </select>
+
+                        <label>Booking Notice</label>
+                        <select>
+                            <option>1 hour</option>
+                            <option>2 hours</option>
+                            <option>24 hours</option>
+                        </select>
+
+                        <button type="button" class="settings-save-btn">
+                            Save Appointment Settings
+                        </button>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Notifications</h3>
+
+                        <label class="settings-check">
+                            <input type="checkbox" checked>
+                            Email appointment confirmations
+                        </label>
+
+                        <label class="settings-check">
+                            <input type="checkbox" checked>
+                            Appointment reminders
+                        </label>
+
+                        <label class="settings-check">
+                            <input type="checkbox">
+                            Daily admin summary
+                        </label>
+
+                        <button type="button" class="settings-save-btn">
+                            Save Notifications
+                        </button>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>AI Automation</h3>
+
+                        <label class="settings-check">
+                            <input type="checkbox" checked>
+                            Enable AI scheduling assistant
+                        </label>
+
+                        <label class="settings-check">
+                            <input type="checkbox" checked>
+                            Suggest alternative appointment times
+                        </label>
+
+                        <label class="settings-check">
+                            <input type="checkbox" checked>
+                            Enable AI business insights
+                        </label>
+
+                        <button type="button" class="settings-save-btn">
+                            Save AI Settings
+                        </button>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Security</h3>
+
+                        <label>Current Password</label>
+                        <input type="password" placeholder="Current password">
+
+                        <label>New Password</label>
+                        <input type="password" placeholder="New password">
+
+                        <button type="button" class="settings-save-btn">
+                            Update Password
+                        </button>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="js/admin.js"></script>
+
+</body>
+</html>
