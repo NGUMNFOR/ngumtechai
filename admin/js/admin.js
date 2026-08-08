@@ -182,6 +182,17 @@ if (appointmentsTableBody) {
             appointmentsTableBody.innerHTML = "";
 
             appointments.forEach(appointment => {
+                const uniqueCustomers = new Set(
+    appointments
+        .map(appointment => appointment["Full Name"])
+        .filter(name => name && name.trim() !== "")
+);
+
+const totalCustomers = document.getElementById("totalCustomers");
+
+if (totalCustomers) {
+    totalCustomers.textContent = uniqueCustomers.size;
+}
 
                 const row = document.createElement("tr");
 
