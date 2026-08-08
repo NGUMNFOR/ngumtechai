@@ -182,17 +182,6 @@ if (appointmentsTableBody) {
             appointmentsTableBody.innerHTML = "";
 
             appointments.forEach(appointment => {
-                const uniqueCustomers = new Set(
-    appointments
-        .map(appointment => appointment["Full Name"])
-        .filter(name => name && name.trim() !== "")
-);
-
-const totalCustomers = document.getElementById("totalCustomers");
-
-if (totalCustomers) {
-    totalCustomers.textContent = uniqueCustomers.size;
-}
 
                 const row = document.createElement("tr");
 
@@ -230,5 +219,30 @@ if (totalCustomers) {
                     </td>
                 </tr>
             `;
+        });
+}
+// Load total customers dynamically on Customers page
+const totalCustomersElement = document.getElementById("totalCustomers");
+
+if (totalCustomersElement) {
+    fetch("https://n8n.ngumtechai.com/webhook/admin-data")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Could not load customer data");
+            }
+
+            return response.json();
+        })
+        .then(appointments => {
+            const uniqueCustomers = new Set(
+                appointments
+                    .map(appointment => appointment["Full Name"])
+                    .filter(name => name && name.trim() !== "")
+            );
+
+            totalCustomersElement.textContent = uniqueCustomers.size;
+        })
+        .catch(error => {
+            console.error("Customer loading error:", error);
         });
 }
