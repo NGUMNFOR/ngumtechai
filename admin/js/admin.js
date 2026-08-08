@@ -266,7 +266,7 @@ if (
             const now = new Date();
 
             const newThisMonth = appointments.filter(appointment => {
-                const dateValue = appointment["appointment time"];
+                const dateValue = appointment["Book DateSSS"];
 
                 if (!dateValue) return false;
 
