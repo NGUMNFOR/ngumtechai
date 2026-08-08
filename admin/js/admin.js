@@ -221,10 +221,19 @@ if (appointmentsTableBody) {
             `;
         });
 }
-// Load total customers dynamically on Customers page
-const totalCustomersElement = document.getElementById("totalCustomers");
 
-if (totalCustomersElement) {
+// Load customer statistics dynamically on Customers page
+const totalCustomersElement = document.getElementById("totalCustomers");
+const newThisMonthElement = document.getElementById("newThisMonth");
+const returningCustomersElement = document.getElementById("returningCustomers");
+const vipCustomersElement = document.getElementById("vipCustomers");
+
+if (
+    totalCustomersElement &&
+    newThisMonthElement &&
+    returningCustomersElement &&
+    vipCustomersElement
+) {
     fetch("https://n8n.ngumtechai.com/webhook/admin-data")
         .then(response => {
             if (!response.ok) {
@@ -234,15 +243,73 @@ if (totalCustomersElement) {
             return response.json();
         })
         .then(appointments => {
-            const uniqueCustomers = new Set(
-                appointments
+
+            // Total unique customers
+            const customerCounts = {};
+
+            appointments.forEach(appointment => {
+                const name = appointment["Full Name"];
+
+                if (name && name.trim() !== "") {
+                    const cleanName = name.trim();
+
+                    customerCounts[cleanName] =
+                        (customerCounts[cleanName] || 0) + 1;
+                }
+            });
+
+            const customerNames = Object.keys(customerCounts);
+
+            totalCustomersElement.textContent = customerNames.length;
+
+            // New customers this month
+            const now = new Date();
+
+            const newThisMonth = appointments.filter(appointment => {
+                const dateValue = appointment["appointment time"];
+
+                if (!dateValue) return false;
+
+                const appointmentDate = new Date(dateValue);
+
+                return (
+                    appointmentDate.getMonth() === now.getMonth() &&
+                    appointmentDate.getFullYear() === now.getFullYear()
+                );
+            });
+
+            const newCustomerNames = new Set(
+                newThisMonth
                     .map(appointment => appointment["Full Name"])
                     .filter(name => name && name.trim() !== "")
             );
 
-            totalCustomersElement.textContent = uniqueCustomers.size;
+            newThisMonthElement.textContent = newCustomerNames.size;
+
+            // Returning customers
+            const returningCustomers = customerNames.filter(
+                name => customerCounts[name] > 1
+            );
+
+            const returningPercentage =
+                customerNames.length > 0
+                    ? Math.round(
+                        (returningCustomers.length / customerNames.length) * 100
+                    )
+                    : 0;
+
+            returningCustomersElement.textContent =
+                returningPercentage + "%";
+
+            // VIP customers
+            // For now, VIP means a customer with 3 or more appointments
+            const vipCustomers = customerNames.filter(
+                name => customerCounts[name] >= 3
+            );
+
+            vipCustomersElement.textContent = vipCustomers.length;
         })
         .catch(error => {
-            console.error("Customer loading error:", error);
+            console.error("Customer statistics loading error:", error);
         });
 }
