@@ -41,24 +41,24 @@
             <section class="stats-grid">
 
     <div class="stat-card">
-        <h3>Today's Appointments</h3>
-        <h2>12</h2>
-    </div>
+    <h3>Today's Appointments</h3>
+    <h2 id="dashboardToday">0</h2>
+</div>
 
-    <div class="stat-card">
-        <h3>Upcoming</h3>
-        <h2>24</h2>
-    </div>
+<div class="stat-card">
+    <h3>Upcoming</h3>
+    <h2 id="dashboardUpcoming">0</h2>
+</div>
 
-    <div class="stat-card">
-        <h3>Returning Customers</h3>
-        <h2>58%</h2>
-    </div>
+<div class="stat-card">
+    <h3>Returning Customers</h3>
+    <h2 id="dashboardReturning">0%</h2>
+</div>
 
-    <div class="stat-card">
-        <h3>Cancellations</h3>
-        <h2>3</h2>
-    </div>
+<div class="stat-card">
+    <h3>Cancellations</h3>
+    <h2 id="dashboardCancellations">3</h2>
+</div>
 
 </section>
 
@@ -86,7 +86,7 @@
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody id="todayAppointments">
                 <tr>
                     <td>8:00 AM</td>
                     <td>John Smith</td>
@@ -152,36 +152,7 @@
                 </tr>
             </thead>
 
-            <tbody>
-                <tr>
-                    <td>August 6, 2026</td>
-                    <td>10:00 AM</td>
-                    <td>Jane Doe</td>
-                    <td>Consultation</td>
-                    <td>
-                        <span class="status status-confirmed">Sent</span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>August 7, 2026</td>
-                    <td>2:00 PM</td>
-                    <td>Michael Lee</td>
-                    <td>Cleaning</td>
-                    <td>
-                        <span class="status status-pending">Pending</span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>August 8, 2026</td>
-                    <td>11:30 AM</td>
-                    <td>Sarah Brown</td>
-                    <td>Follow-up</td>
-                    <td>
-                        <span class="status status-cancelled">Not Sent</span>
-                    </td>
-                </tr>
+            <tbody id="dashboardUpcomingAppointments">
             </tbody>
         </table>
     </div>
@@ -200,7 +171,7 @@
         </button>
     </div>
 
-    <div class="customer-grid">
+    <div class="customer-grid" id="dashboardReturningCustomers">
 
         <article class="customer-card">
             <div class="customer-card-header">
@@ -281,36 +252,8 @@
                 </tr>
             </thead>
 
-            <tbody>
-                <tr>
-                    <td>August 5, 2026</td>
-                    <td>August 6, 2026</td>
-                    <td>John Smith</td>
-                    <td>Rescheduled</td>
-                    <td>
-                        <span class="status status-confirmed">Updated</span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>August 7, 2026</td>
-                    <td>Not Applicable</td>
-                    <td>Sarah Brown</td>
-                    <td>Cancelled</td>
-                    <td>
-                        <span class="status status-cancelled">Cancelled</span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>August 8, 2026</td>
-                    <td>August 10, 2026</td>
-                    <td>Mary Johnson</td>
-                    <td>Rescheduled</td>
-                    <td>
-                        <span class="status status-confirmed">Updated</span>
-                    </td>
-                </tr>
+            <tbody id="dashboardReschedulesTable">
+                
             </tbody>
         </table>
     </div>
@@ -332,57 +275,16 @@
     <div class="table-wrapper">
         <table class="appointments-table">
             <thead>
-                <tr>
-                    <th>Customer</th>
-                    <th>Appointment</th>
-                    <th>Email Reminder</th>
-                    <th>SMS Reminder</th>
-                    <th>Overall Status</th>
-                </tr>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Email Reminder</th>
+                <th>SMS Reminder</th>
+                <th>Overall Status</th>
             </thead>
 
-            <tbody>
-                <tr>
-                    <td>John Smith</td>
-                    <td>August 6, 2026 at 10:00 AM</td>
-                    <td>
-                        <span class="status status-confirmed">Sent</span>
-                    </td>
-                    <td>
-                        <span class="status status-confirmed">Sent</span>
-                    </td>
-                    <td>
-                        <span class="status status-confirmed">Completed</span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Mary Johnson</td>
-                    <td>August 7, 2026 at 2:00 PM</td>
-                    <td>
-                        <span class="status status-confirmed">Sent</span>
-                    </td>
-                    <td>
-                        <span class="status status-pending">Pending</span>
-                    </td>
-                    <td>
-                        <span class="status status-pending">Waiting</span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Sarah Brown</td>
-                    <td>August 8, 2026 at 11:30 AM</td>
-                    <td>
-                        <span class="status status-cancelled">Failed</span>
-                    </td>
-                    <td>
-                        <span class="status status-cancelled">Failed</span>
-                    </td>
-                    <td>
-                        <span class="status status-cancelled">Retry Needed</span>
-                    </td>
-                </tr>
+            <tbody id="dashboardReminderStatus">
+               
             </tbody>
         </table>
     </div>

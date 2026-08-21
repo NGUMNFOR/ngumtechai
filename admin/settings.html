@@ -57,34 +57,35 @@
                         <h3>Business Profile</h3>
 
                         <label>Business Name</label>
-                        <input type="text" value="Ngum Tech AI">
+<input type="text" id="businessName" value="Ngum Tech AI">
 
-                        <label>Business Email</label>
-                        <input type="email" placeholder="admin@example.com">
+<label>Business Email</label>
+<input type="email" id="businessEmail" placeholder="admin@example.com">
 
-                        <label>Phone Number</label>
-                        <input type="tel" placeholder="Business phone number">
+<label>Phone Number</label>
+<input type="tel" id="businessPhone" placeholder="Business phone number">
 
-                        <button type="button" class="settings-save-btn">
-                            Save Profile
-                        </button>
+<button type="button" id="saveProfileBtn" class="settings-save-btn">
+    Save Profile
+</button>
+                    
                     </div>
 
                     <div class="settings-card">
                         <h3>Business Hours</h3>
 
                         <label>Opening Time</label>
-                        <input type="time" value="08:00">
+                        <input type="time" id="openingTime" value="08:00">
 
                         <label>Closing Time</label>
-                        <input type="time" value="17:30">
+                        <input type="time" id="closingTime" value="17:30">
 
                         <label>Time Zone</label>
-                        <select>
+                        <select id="businessTimeZone">
                             <option>America/New_York</option>
                         </select>
 
-                        <button type="button" class="settings-save-btn">
+                        <button type="button" id="saveHoursBtn" class="settings-save-btn">
                             Save Hours
                         </button>
                     </div>
@@ -93,20 +94,19 @@
                         <h3>Appointment Settings</h3>
 
                         <label>Default Appointment Length</label>
-                        <select>
+                        <select id="appointmentLength">
                             <option>30 minutes</option>
                             <option>45 minutes</option>
                             <option>60 minutes</option>
                         </select>
 
-                        <label>Booking Notice</label>
-                        <select>
+                        <select id="bookingNotice">
                             <option>1 hour</option>
                             <option>2 hours</option>
                             <option>24 hours</option>
                         </select>
 
-                        <button type="button" class="settings-save-btn">
+                        <button type="button" id="saveAppointmentBtn" class="settings-save-btn">
                             Save Appointment Settings
                         </button>
                     </div>
@@ -115,21 +115,21 @@
                         <h3>Notifications</h3>
 
                         <label class="settings-check">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" id="emailConfirmations" checked>
                             Email appointment confirmations
                         </label>
 
                         <label class="settings-check">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" id="appointmentReminders" checked>
                             Appointment reminders
                         </label>
 
                         <label class="settings-check">
-                            <input type="checkbox">
+                            <input type="checkbox" id="dailyAdminSummary">
                             Daily admin summary
                         </label>
 
-                        <button type="button" class="settings-save-btn">
+                        <button type="button" id="saveNotificationsBtn" class="settings-save-btn">
                             Save Notifications
                         </button>
                     </div>
@@ -138,38 +138,36 @@
                         <h3>AI Automation</h3>
 
                         <label class="settings-check">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" id="aiSchedulingAssistant" checked>
                             Enable AI scheduling assistant
                         </label>
 
                         <label class="settings-check">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" id="aiAlternativeTimes" checked>
                             Suggest alternative appointment times
                         </label>
 
                         <label class="settings-check">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" id="aiBusinessInsights" checked>
                             Enable AI business insights
                         </label>
 
-                        <button type="button" class="settings-save-btn">
+                        <button type="button" id="saveAISettingsBtn" class="settings-save-btn">
                             Save AI Settings
                         </button>
                     </div>
+<div class="settings-card">
+    <h3>Security</h3>
 
-                    <div class="settings-card">
-                        <h3>Security</h3>
+    <p>
+        Admin login and password management will be added
+        in the Login & Security phase.
+    </p>
 
-                        <label>Current Password</label>
-                        <input type="password" placeholder="Current password">
-
-                        <label>New Password</label>
-                        <input type="password" placeholder="New password">
-
-                        <button type="button" class="settings-save-btn">
-                            Update Password
-                        </button>
-                    </div>
+    <button type="button" class="settings-save-btn" disabled>
+        Security Setup Coming Later
+    </button>
+</div>
 
                 </div>
 

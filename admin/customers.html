@@ -113,39 +113,6 @@
 
             <tbody id="customerTableBody">
 
-                <tr class="customer-row">
-                    <td>John Smith</td>
-                    <td>john@email.com</td>
-                    <td>(301) 555-2100</td>
-                    <td>Aug 2, 2026</td>
-                    <td><span class="status status-confirmed">Active</span></td>
-                    <td><button type="button" class="edit-customer-btn">Edit</button></td>
-                </tr>
-
-                <tr class="customer-row">
-                    <td>Mary Johnson</td>
-                    <td>mary@email.com</td>
-                    <td>(240) 555-3200</td>
-                    <td>Jul 25, 2026</td>
-                    <td><span class="status status-pending">Inactive</span></td>
-                </tr>
-
-                <tr class="customer-row">
-                    <td>Sarah Brown</td>
-                    <td>sarah@email.com</td>
-                    <td>(443) 555-7788</td>
-                    <td>Jul 29, 2026</td>
-                    <td><span class="status status-confirmed">Active</span></td>
-                </tr>
-
-                <tr class="customer-row">
-                    <td>Robert Lee</td>
-                    <td>robert@email.com</td>
-                    <td>(410) 555-9921</td>
-                    <td>Aug 1, 2026</td>
-                    <td><span class="status status-confirmed">Active</span></td>
-                </tr>
-
             </tbody>
 
         </table>
@@ -166,31 +133,7 @@
      </button>
     </div>
 
-    <div class="customer-grid">
-
-        <div class="customer-card">
-            <div class="customer-avatar">JS</div>
-            <h3>John Smith</h3>
-            <p>Total Visits: 7</p>
-            <p>Preferred Service: Consultation</p>
-            <p>Last Visit: Aug 2, 2026</p>
-        </div>
-
-        <div class="customer-card">
-            <div class="customer-avatar">MJ</div>
-            <h3>Mary Johnson</h3>
-            <p>Total Visits: 4</p>
-            <p>Preferred Service: Cleaning</p>
-            <p>Last Visit: Jul 25, 2026</p>
-        </div>
-
-        <div class="customer-card">
-            <div class="customer-avatar">SB</div>
-            <h3>Sarah Brown</h3>
-            <p>Total Visits: 5</p>
-            <p>Preferred Service: Follow-up</p>
-            <p>Last Visit: Jul 29, 2026</p>
-        </div>
+    <div class="customer-grid" id="customerProfilesGrid"></div>
 
     </div>
 
@@ -222,39 +165,7 @@
                 </tr>
             </thead>
 
-            <tbody>
-
-                <tr>
-                    <td>John Smith</td>
-                    <td>Consultation</td>
-                    <td>Aug 2, 2026</td>
-                    <td>10:00 AM</td>
-                    <td><span class="status status-confirmed">Completed</span></td>
-                </tr>
-
-                <tr>
-                    <td>Mary Johnson</td>
-                    <td>Cleaning</td>
-                    <td>Jul 25, 2026</td>
-                    <td>2:00 PM</td>
-                    <td><span class="status status-pending">Upcoming</span></td>
-                </tr>
-
-                <tr>
-                    <td>Sarah Brown</td>
-                    <td>Follow-up</td>
-                    <td>Jul 29, 2026</td>
-                    <td>11:30 AM</td>
-                    <td><span class="status status-confirmed">Completed</span></td>
-                </tr>
-
-                <tr>
-                    <td>Robert Lee</td>
-                    <td>Yearly Physical</td>
-                    <td>Aug 5, 2026</td>
-                    <td>9:00 AM</td>
-                    <td><span class="status status-cancelled">Cancelled</span></td>
-                </tr>
+            <tbody id="appointmentHistoryBody">
 
             </tbody>
 
@@ -277,9 +188,9 @@
 
         <div class="customer-card">
             <h3>Most Loyal Customer</h3>
-            <p><strong>John Smith</strong></p>
-            <p>12 completed appointments</p>
-            <p>Customer since 2024</p>
+             <p><strong id="mostLoyalCustomer">John Smith</strong></p>
+             <p id="loyalCustomerAppointments">12 completed appointments</p>
+             <p id="loyalCustomerSince">Customer since --</p>
         </div>
 
         <div class="customer-card">
@@ -319,36 +230,8 @@
                 </tr>
             </thead>
 
-            <tbody>
-
-                <tr>
-                    <td>John Smith</td>
-                    <td>Booked Consultation</td>
-                    <td>Aug 2, 2026</td>
-                    <td><span class="status status-confirmed">Completed</span></td>
-                </tr>
-
-                <tr>
-                    <td>Mary Johnson</td>
-                    <td>Updated Contact Info</td>
-                    <td>Jul 31, 2026</td>
-                    <td><span class="status status-pending">Pending</span></td>
-                </tr>
-
-                <tr>
-                    <td>Sarah Brown</td>
-                    <td>Follow-up Appointment</td>
-                    <td>Jul 29, 2026</td>
-                    <td><span class="status status-confirmed">Completed</span></td>
-                </tr>
-
-                <tr>
-                    <td>Robert Lee</td>
-                    <td>Cancelled Appointment</td>
-                    <td>Jul 28, 2026</td>
-                    <td><span class="status status-cancelled">Cancelled</span></td>
-                </tr>
-
+            <tbody id="recentCustomerActivityBody">
+                
             </tbody>
         </table>
     </div>

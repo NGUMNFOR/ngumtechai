@@ -1,4 +1,5 @@
 
+
 console.log("ADMIN JS IS RUNNING");
 let editingCustomerIndex = null;
 document.addEventListener("DOMContentLoaded", function () {
@@ -515,181 +516,136 @@ if (count > 1) {
 }
     });
 }
-// =====================================================
-// DASHBOARD: TODAY'S + UPCOMING APPOINTMENTS
-// =====================================================
 
-// Get today's date in New York
-const dashboardCurrentDate = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "America/New_York",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit"
-}).format(new Date());
+    // Dashboard: Today's Appointments
+const dashboardTodayDate = new Date().toLocaleDateString("en-CA", { timeZone: "America/New_York" });
+console.log("TODAY DATE:", dashboardTodayDate);
+console.log("APPOINTMENT DATES:", appointments.map(a => a["appointment Date"]));
 
-// Safely get an appointment date
-function getDashboardAppointmentDate(appointment) {
-    return String(
-        appointment["appointment Date"] ||
-        appointment["Appointment Date"] ||
-        appointment["New Appointment Date"] ||
-        ""
-    ).trim();
-}
-
-// Ignore cancelled appointments
-function isDashboardActiveAppointment(appointment) {
-    const status = String(appointment["Status"] || "")
-        .trim()
-        .toLowerCase();
-
-    return status !== "cancelled" && status !== "canceled";
-}
-
-// -----------------------------
-// TODAY'S APPOINTMENTS
-// -----------------------------
-
-const dashboardTodaysAppointments = appointments.filter(appointment => {
-    const appointmentDate = getDashboardAppointmentDate(appointment);
-
-    return (
-        appointmentDate === dashboardCurrentDate &&
-        isDashboardActiveAppointment(appointment)
-    );
-});
-
-const dashboardTodayCount = dashboardTodaysAppointments.length;
+const dashboardTodayCount = appointments.filter(appointment => {
+    return appointment["appointment Date"] === dashboardTodayDate;
+}).length;
 
 if (dashboardToday) {
     dashboardToday.textContent = dashboardTodayCount;
 }
-
-const appointmentsToday =
-    document.getElementById("appointmentsToday");
+const appointmentsToday = document.getElementById("appointmentsToday");
 
 if (appointmentsToday) {
     appointmentsToday.textContent = dashboardTodayCount;
 }
+// Populate Today's Appointments table with live data
+const todayAppointmentsTable = document.getElementById("todayAppointments");
 
-// Today's Appointments table
-const dashboardTodayTable =
-    document.getElementById("todayAppointments");
+if (todayAppointmentsTable) {
+    todayAppointmentsTable.innerHTML = "";
 
-if (dashboardTodayTable) {
-    dashboardTodayTable.innerHTML = "";
-
-    if (dashboardTodaysAppointments.length === 0) {
-        dashboardTodayTable.innerHTML = `
-            <tr>
-                <td colspan="4">
-                    No appointments scheduled for today.
-                </td>
-            </tr>
-        `;
-    } else {
-        dashboardTodaysAppointments.forEach(appointment => {
-            const row = document.createElement("tr");
-
-            const status =
-                appointment["Status"] || "Pending";
-
-            const statusClass = String(status)
-                .trim()
-                .toLowerCase();
-
-            row.innerHTML = `
-                <td>${appointment["appointment time"] || appointment["Appointment Time"] || ""}</td>
-                <td>${appointment["Full Name"] || ""}</td>
-                <td>${appointment["service"] || appointment["Service"] || ""}</td>
-                <td>
-                    <span class="status status-${statusClass}">
-                        ${status}
-                    </span>
-                </td>
-            `;
-
-            dashboardTodayTable.appendChild(row);
-        });
-    }
-}
-
-// -----------------------------
-// UPCOMING APPOINTMENTS
-// -----------------------------
-
-const dashboardUpcomingAppointments = appointments
-    .filter(appointment => {
-        const appointmentDate =
-            getDashboardAppointmentDate(appointment);
-
-        return (
-            appointmentDate > dashboardCurrentDate &&
-            isDashboardActiveAppointment(appointment)
-        );
-    })
-    .sort((a, b) => {
-        const dateA = getDashboardAppointmentDate(a);
-        const dateB = getDashboardAppointmentDate(b);
-
-        return dateA.localeCompare(dateB);
+    const todaysAppointments = appointments.filter(appointment => {
+        return appointment["appointment Date"] === dashboardTodayDate;
     });
 
-const dashboardUpcomingCount =
-    dashboardUpcomingAppointments.length;
+    const dayOfWeek = new Date().getDay();
+
+if (dayOfWeek === 0 || dayOfWeek === 6) {
+    todayAppointmentsTable.innerHTML = `
+        <tr>
+            <td colspan="4">Office closed today.</td>
+        </tr>
+    `;
+    return;
+}
+
+if (todaysAppointments.length === 0) {
+    todayAppointmentsTable.innerHTML = `
+        <tr>
+            <td colspan="4">No appointments scheduled for today.</td>
+        </tr>
+    `;
+    return;
+}
+
+console.log("TODAY APPOINTMENT DATA:", todaysAppointments);
+    todaysAppointments.forEach(appointment => {
+        const row = document.createElement("tr");
+
+        const status = appointment["Status"] || "Pending";
+        const statusClass = status.toLowerCase();
+
+        row.innerHTML = `
+            <td>${appointment["appointment time"] || ""}</td>
+            <td>${appointment["Full Name"] || ""}</td>
+            <td>${appointment["service"] || ""}</td>
+            <td>
+                <span class="status status-${statusClass}">
+                    ${status}
+                </span>
+            </td>
+        `;
+
+        todayAppointmentsTable.appendChild(row);
+    });
+}
+// Dashboard: Upcoming Appointments
+const todayUpcomingDate = new Date().toLocaleDateString("en-CA", {
+    timeZone: "America/New_York"
+});
+console.log("UPCOMING TODAY:", todayUpcomingDate);
+
+const dashboardUpcomingCount = appointments.filter(appointment => {
+    const appointmentDate = String(
+        appointment["appointment Date"] || ""
+    ).trim();
+
+    return appointmentDate > todayUpcomingDate;
+}).length;
 
 if (dashboardUpcoming) {
     dashboardUpcoming.textContent = dashboardUpcomingCount;
 }
 
-const appointmentsUpcoming =
-    document.getElementById("appointmentsUpcoming");
+// Populate Upcoming Appointments table with live data
+const appointmentsUpcoming = document.getElementById("appointmentsUpcoming");
 
 if (appointmentsUpcoming) {
-    appointmentsUpcoming.textContent =
-        dashboardUpcomingCount;
+    appointmentsUpcoming.textContent = dashboardUpcomingCount;
 }
-
-// Upcoming Appointments table
 const dashboardUpcomingTable =
     document.getElementById("dashboardUpcomingAppointments");
 
 if (dashboardUpcomingTable) {
     dashboardUpcomingTable.innerHTML = "";
 
-    if (dashboardUpcomingAppointments.length === 0) {
-        dashboardUpcomingTable.innerHTML = `
-            <tr>
-                <td colspan="5">
-                    No upcoming appointments.
-                </td>
-            </tr>
+const upcomingAppointments = appointments.filter(appointment => {
+    const appointmentDate = String(
+        appointment["appointment Date"] || ""
+    ).trim();
+
+    return appointmentDate > dashboardTodayDate;
+});
+upcomingAppointments.sort((a, b) => {
+    const dateA = new Date(a["appointment Date"]);
+    const dateB = new Date(b["appointment Date"]);
+    return dateA - dateB;
+});
+    upcomingAppointments.forEach(appointment => {
+        const row = document.createElement("tr");
+
+        const reminder =
+            appointment["SMS Reminder sent"] ||
+            appointment["Reminder Sent"] ||
+            "Not Sent";
+
+        row.innerHTML = `
+            <td>${appointment["appointment Date"] || ""}</td>
+            <td>${appointment["appointment time"] || ""}</td>
+            <td>${appointment["Full Name"] || ""}</td>
+            <td>${appointment["service"] || ""}</td>
+            <td>${reminder}</td>
         `;
-    } else {
-        dashboardUpcomingAppointments.forEach(appointment => {
-            const row = document.createElement("tr");
 
-            const reminder =
-                appointment["SMS Reminder sent"] ||
-                appointment["Reminder Sent"] ||
-                "Not Sent";
-
-            row.innerHTML = `
-                <td>${getDashboardAppointmentDate(appointment)}</td>
-                <td>${appointment["appointment time"] || appointment["Appointment Time"] || ""}</td>
-                <td>${appointment["Full Name"] || ""}</td>
-                <td>${appointment["service"] || appointment["Service"] || ""}</td>
-                <td>${reminder}</td>
-            `;
-
-            dashboardUpcomingTable.appendChild(row);
-        });
-    }
+        dashboardUpcomingTable.appendChild(row);
+    });
 }
-
-console.log("DASHBOARD DATE:", dashboardCurrentDate);
-console.log("DASHBOARD TODAY COUNT:", dashboardTodayCount);
-console.log("DASHBOARD UPCOMING COUNT:", dashboardUpcomingCount);
 
             // Calculate today's appointment capacity
 const capacityPercent = document.getElementById("capacityPercent");
@@ -867,59 +823,13 @@ for (let i = 0; i < firstDay; i++) {
 for (let day = 1; day <= daysInMonth; day++) {
     const dayCell = document.createElement("div");
     dayCell.className = "calendar-day";
-
-    const dayNumber = document.createElement("div");
-    dayNumber.textContent = day;
-    dayCell.appendChild(dayNumber);
-
-    const appointmentsForDay = appointments.filter(appointment => {
-        const appointmentDate =
-            appointment["appointment Date"] ||
-            appointment.date ||
-            appointment.Date;
-
-        if (!appointmentDate) return false;
-
-        const date = new Date(appointmentDate + "T00:00:00");
-
-        return (
-            date.getFullYear() === year &&
-            date.getMonth() === month &&
-            date.getDate() === day
-        );
-    });
-
-    if (appointmentsForDay.length > 0) {
-        const count = document.createElement("div");
-        count.textContent =
-            appointmentsForDay.length === 1
-                ? "1 appointment"
-                : `${appointmentsForDay.length} appointments`;
-
-        count.style.fontSize = "11px";
-        count.style.marginTop = "6px";
-        count.style.color = "#60a5fa";
-
-        dayCell.appendChild(count);
-    }
+    dayCell.textContent = day;
 
     appointmentCalendar.appendChild(dayCell);
 }
 }
 console.log("ABOUT TO RENDER CALENDAR");
 renderCalendar();
-if (previousMonthButton) {
-    previousMonthButton.addEventListener("click", () => {
-        calendarDate.setMonth(calendarDate.getMonth() - 1);
-        renderCalendar();
-    });
-}
-if (nextMonthButton) {
-    nextMonthButton.addEventListener("click", () => {
-        calendarDate.setMonth(calendarDate.getMonth() + 1);
-        renderCalendar();
-    });
-}
 
 const upcomingAppointmentsTableBody = document.getElementById("UpcomingAppointmentsTablebody");
             if (upcomingAppointmentsTableBody) {
@@ -1317,138 +1227,4 @@ if (recentCustomerActivityBody) {
 
  });
 
-
- // ================================
-// SETTINGS PAGE - BUSINESS PROFILE
-// ================================
-
-const saveProfileBtn = document.getElementById("saveProfileBtn");
-
-if (saveProfileBtn) {
-    saveProfileBtn.addEventListener("click", function () {
-        const businessName = document.getElementById("businessName").value;
-        const businessEmail = document.getElementById("businessEmail").value;
-        const businessPhone = document.getElementById("businessPhone").value;
-
-        localStorage.setItem("businessName", businessName);
-        localStorage.setItem("businessEmail", businessEmail);
-        localStorage.setItem("businessPhone", businessPhone);
-
-        alert("Business profile saved successfully.");
-    });
-}
-// ======================================
-// SETTINGS PAGE - BUSINESS HOURS
-// ======================================
-
-const saveHoursBtn = document.getElementById("saveHoursBtn");
-
-if (saveHoursBtn) {
-    saveHoursBtn.addEventListener("click", function () {
-        const openingTime = document.getElementById("openingTime").value;
-        const closingTime = document.getElementById("closingTime").value;
-        const businessTimeZone = document.getElementById("businessTimeZone").value;
-
-        localStorage.setItem("openingTime", openingTime);
-        localStorage.setItem("closingTime", closingTime);
-        localStorage.setItem("businessTimeZone", businessTimeZone);
-
-        alert("Business hours saved successfully.");
-    });
-}
-// ==============================
-// SETTINGS PAGE - APPOINTMENT SETTINGS
-// ==============================
-
-const saveAppointmentBtn = document.getElementById("saveAppointmentBtn");
-
-if (saveAppointmentBtn) {
-    saveAppointmentBtn.addEventListener("click", function () {
-
-        const appointmentLength =
-            document.getElementById("appointmentLength").value;
-
-        const bookingNotice =
-            document.getElementById("bookingNotice").value;
-
-        localStorage.setItem("appointmentLength", appointmentLength);
-        localStorage.setItem("bookingNotice", bookingNotice);
-
-        alert("Appointment settings saved successfully.");
-    });
-}
-// ==============================
-// SETTINGS PAGE - NOTIFICATIONS
-// ==============================
-
-const saveNotificationsBtn = document.getElementById("saveNotificationsBtn");
-
-if (saveNotificationsBtn) {
-    saveNotificationsBtn.addEventListener("click", function () {
-        const emailConfirmations = document.getElementById("emailConfirmations").checked;
-const appointmentReminders = document.getElementById("appointmentReminders").checked;
-const dailyAdminSummary = document.getElementById("dailyAdminSummary").checked;
-
-localStorage.setItem("emailConfirmations", emailConfirmations);
-localStorage.setItem("appointmentReminders", appointmentReminders);
-localStorage.setItem("dailyAdminSummary", dailyAdminSummary);
-
-alert("Notification settings saved successfully.");
-    });
-}
-// Restore saved notification settings
-const emailConfirmationsBox = document.getElementById("emailConfirmations");
-const appointmentRemindersBox = document.getElementById("appointmentReminders");
-const dailyAdminSummaryBox = document.getElementById("dailyAdminSummary");
-
-if (emailConfirmationsBox && localStorage.getItem("emailConfirmations") !== null) {
-    emailConfirmationsBox.checked =
-        localStorage.getItem("emailConfirmations") === "true";
-}
-
-if (appointmentRemindersBox && localStorage.getItem("appointmentReminders") !== null) {
-    appointmentRemindersBox.checked =
-        localStorage.getItem("appointmentReminders") === "true";
-}
-
-if (dailyAdminSummaryBox && localStorage.getItem("dailyAdminSummary") !== null) {
-    dailyAdminSummaryBox.checked =
-        localStorage.getItem("dailyAdminSummary") === "true";
-}
-// ==============================
-// SETTINGS PAGE - AI AUTOMATION
-// ==============================
-
-const saveAISettingsBtn = document.getElementById("saveAISettingsBtn");
-
-if (saveAISettingsBtn) {
-    saveAISettingsBtn.addEventListener("click", function () {
-        const aiSchedulingAssistant = document.getElementById("aiSchedulingAssistant").checked;
-const aiAlternativeTimes = document.getElementById("aiAlternativeTimes").checked;
-const aiBusinessInsights = document.getElementById("aiBusinessInsights").checked;
-
-localStorage.setItem("aiSchedulingAssistant", aiSchedulingAssistant);
-localStorage.setItem("aiAlternativeTimes", aiAlternativeTimes);
-localStorage.setItem("aiBusinessInsights", aiBusinessInsights);
-
-alert("AI settings saved successfully.");
-    });
-}
-const aiSchedulingAssistantBox = document.getElementById("aiSchedulingAssistant");
-const aiAlternativeTimesBox = document.getElementById("aiAlternativeTimes");
-const aiBusinessInsightsBox = document.getElementById("aiBusinessInsights");
-
-if (aiSchedulingAssistantBox && localStorage.getItem("aiSchedulingAssistant") !== null) {
-    aiSchedulingAssistantBox.checked =
-        localStorage.getItem("aiSchedulingAssistant") === "true";
-}
-
-if (aiAlternativeTimesBox && localStorage.getItem("aiAlternativeTimes") !== null) {
-    aiAlternativeTimesBox.checked =
-        localStorage.getItem("aiAlternativeTimes") === "true";
-}
-
-if (aiBusinessInsightsBox && localStorage.getItem("aiBusinessInsights") !== null) {
-    aiBusinessInsightsBox.checked =
-        localStorage.getItem("aiBusinessInsights") === "true";
-}
+            
