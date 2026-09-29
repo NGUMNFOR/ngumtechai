@@ -9,7 +9,7 @@ loginForm.addEventListener("submit", async function (event) {
 
     console.log("Sending login request to n8n...");
 
-    const response = await fetch("https://n8n.ngumtechai.com/webhook-test/admin-login", {
+    const response = await fetch("https://n8n.ngumtechai.com/webhook/admin-login", {
     method: "POST",
     headers: {
         "Content-Type": "application/json"
