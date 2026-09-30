@@ -217,7 +217,6 @@ if (analyticsReturningCustomers) {
             ? Math.round((analyticsReturningCount / analyticsCustomerCount) * 100) + "%"
             : "0%";
 }
-
 // Analytics: Booking Trends
 const analyticsBookingTrends = document.getElementById("analyticsBookingTrends");
 
@@ -233,21 +232,22 @@ if (analyticsBookingTrends) {
     };
 
     appointments.forEach(appointment => {
-        if (
-    appointment.Status === "Cancelled" ||
-    appointment.Status === "Rescheduled"
-) return;
-        console.log("BOOKING CHECK:", appointment.Status, appointment.Action, appointment["appointment Date"], appointment["New Appointment Date"], appointment["Previous Appointment Date"]);
 
-      const dateValue =
-    appointment["appointment Date"] ||
-    appointment["Appointment Date"] ||
-    appointment["New Appointment Date"] ||
-    appointment["Previous Appointment Date"] ||
-    appointment["Date"];
+        if (
+            appointment.Status === "Cancelled" ||
+            appointment.Status === "Rescheduled"
+        ) return;
+
+        const dateValue =
+            appointment["appointment Date"] ||
+            appointment["Appointment Date"] ||
+            appointment["New Appointment Date"] ||
+            appointment["Previous Appointment Date"] ||
+            appointment["Date"];
 
         if (dateValue) {
-            const [year, month, day] = String(dateValue).split("-").map(Number);
+            const dateText = String(dateValue).split("T")[0];
+            const [year, month, day] = dateText.split("-").map(Number);
             const date = new Date(year, month - 1, day);
 
             if (!isNaN(date)) {
@@ -255,22 +255,41 @@ if (analyticsBookingTrends) {
                     weekday: "long"
                 });
 
-                dayCounts[dayName]++;
-                if (dayName === "Monday") console.log("MONDAY:", dateValue);
+                if (dayCounts[dayName] !== undefined) {
+                    dayCounts[dayName]++;
+                }
             }
         }
     });
-    analyticsBookingTrends.innerHTML = Object.entries(dayCounts)
-    .filter(([day]) => day !== "Sunday" && day !== "Saturday")
-    .map(([day, count]) => `
-        <tr>
-            <td>${day}</td>
-            <td>${count}</td>
-            <td>—</td>
-        </tr>
-    `).join("");
-}
 
+    const weekdayCounts = Object.entries(dayCounts)
+        .filter(([day]) => day !== "Sunday" && day !== "Saturday");
+
+    const totalBookings = weekdayCounts
+        .reduce((sum, [, count]) => sum + count, 0);
+
+    const averageBookings = totalBookings / 5;
+
+    analyticsBookingTrends.innerHTML = weekdayCounts
+        .map(([day, count]) => {
+
+            const growth = averageBookings > 0
+                ? Math.round(((count - averageBookings) / averageBookings) * 100)
+                : 0;
+
+            const growthText =
+                growth > 0 ? `+${growth}%` : `${growth}%`;
+
+            return `
+                <tr>
+                    <td>${day}</td>
+                    <td>${count}</td>
+                    <td>${growthText}</td>
+                </tr>
+            `;
+        })
+        .join("");
+}
 // Analytics: Peak Booking Times
 const analyticsPeakBookingTimes =
     document.getElementById("analyticsPeakBookingTimes");
@@ -279,22 +298,78 @@ if (analyticsPeakBookingTimes) {
     const timeCounts = {};
 
     appointments.forEach(appointment => {
-        const time = String(
+        let time = String(
             appointment["appointment time"] ||
             appointment["Appointment Time"] ||
             ""
         ).trim();
 
-        if (time) {
-            timeCounts[time] = (timeCounts[time] || 0) + 1;
+        if (!time) return;
+
+        // If the sheet contains a range such as
+        // "11:00 AM to 12:00 PM", use only the starting time.
+        time = time.split(/\s+to\s+/i)[0].trim();
+
+        let hour;
+        let minute = 0;
+
+        // 12-hour format, for example 10:00 AM or 2:45 PM
+        let match = time.match(/^(\d{1,2})(?::(\d{2}))?\s*(AM|PM)$/i);
+
+        if (match) {
+            hour = Number(match[1]);
+            minute = Number(match[2] || 0);
+
+            const period = match[3].toUpperCase();
+
+            if (period === "PM" && hour !== 12) hour += 12;
+            if (period === "AM" && hour === 12) hour = 0;
+        } else {
+            // 24-hour format, for example 13:00 or 14:45
+            match = time.match(/^(\d{1,2}):(\d{2})$/);
+
+            if (!match) return;
+
+            hour = Number(match[1]);
+            minute = Number(match[2]);
         }
+
+        if (
+            hour < 0 ||
+            hour > 23 ||
+            minute < 0 ||
+            minute > 59
+        ) return;
+
+        // Convert everything to one consistent display format.
+        const period = hour >= 12 ? "PM" : "AM";
+        const displayHour = hour % 12 || 12;
+        const displayMinute = String(minute).padStart(2, "0");
+
+        const normalizedTime =
+            `${displayHour}:${displayMinute} ${period}`;
+
+        if (!timeCounts[normalizedTime]) {
+            timeCounts[normalizedTime] = {
+                count: 0,
+                minutes: hour * 60 + minute
+            };
+        }
+
+        timeCounts[normalizedTime].count++;
     });
 
     const peakTimes = Object.entries(timeCounts)
-        .sort((a, b) => b[1] - a[1]);
+        .sort((a, b) => {
+            if (b[1].count !== a[1].count) {
+                return b[1].count - a[1].count;
+            }
+
+            return a[1].minutes - b[1].minutes;
+        });
 
     analyticsPeakBookingTimes.innerHTML = peakTimes
-        .map(([time, count], index) => {
+        .map(([time, data], index) => {
             const stars =
                 index === 0 ? "★★★★★" :
                 index === 1 ? "★★★★☆" :
@@ -304,46 +379,143 @@ if (analyticsPeakBookingTimes) {
             return `
                 <tr>
                     <td>${time}</td>
-                    <td>${count}</td>
+                    <td>${data.count}</td>
                     <td>${stars}</td>
                 </tr>
             `;
         })
         .join("");
-}
-// Analytics: Most Requested Services
-const analyticsRequestedServices = document.getElementById("analyticsRequestedServices");
-if (analyticsRequestedServices) {
-    const serviceCounts = {};
-    appointments.forEach(appointment => {
-    console.log("SERVICE DATA:", appointment);
-    const service = String(appointment["service"] || "")
-    .trim()
-    .toLowerCase()
-    .replace(/-/g, " ");
+        // Customers: Most Requested Service
+const mostRequestedService = document.getElementById("mostRequestedService");
+const mostRequestedServiceBookings = document.getElementById("mostRequestedServiceBookings");
+const mostRequestedServicePercent = document.getElementById("mostRequestedServicePercent");
 
-    if (service) {
-        serviceCounts[service] = (serviceCounts[service] || 0) + 1;
-    }
-});
-const totalServices = Object.values(serviceCounts)
-    .reduce((total, count) => total + count, 0);
-   analyticsRequestedServices.innerHTML = Object.entries(serviceCounts)
-    .sort((a, b) => b[1] - a[1])
-    .map(([service, count]) => {
-        const share = totalServices > 0
-            ? Math.round((count / totalServices) * 100)
+if (mostRequestedService && mostRequestedServiceBookings && mostRequestedServicePercent) {
+    const customerServiceCounts = {};
+
+    appointments.forEach(appointment => {
+        let service = String(
+            appointment["service"] ||
+            appointment["Service"] ||
+            ""
+        )
+        .trim()
+        .toLowerCase()
+        .replace(/-/g, " ")
+        .replace(/\s+/g, " ");
+
+        if (service) {
+            customerServiceCounts[service] =
+                (customerServiceCounts[service] || 0) + 1;
+        }
+    });
+
+    const serviceEntries = Object.entries(customerServiceCounts)
+        .sort((a, b) => b[1] - a[1]);
+
+    if (serviceEntries.length > 0) {
+        const [topService, topCount] = serviceEntries[0];
+
+        const displayService = topService.replace(/\b\w/g, char =>
+            char.toUpperCase()
+        );
+
+        const percent = appointments.length > 0
+            ? Math.round((topCount / appointments.length) * 100)
             : 0;
 
-        return `
-            <tr>
-                <td>${service.replace(/\b\w/g, letter => letter.toUpperCase())}</td>
-                <td>${count}</td>
-                <td>${share}%</td>
-            </tr>
-        `;
-    })
-    .join("");
+        mostRequestedService.textContent = displayService;
+        mostRequestedServiceBookings.textContent = `${topCount} bookings`;
+        mostRequestedServicePercent.textContent =
+            `${percent}% of all appointments`;
+    }
+}
+}// Analytics: Most Requested Services
+const analyticsRequestedServices =
+    document.getElementById("analyticsRequestedServices");
+
+if (analyticsRequestedServices) {
+
+    const serviceCounts = {};
+
+    appointments.forEach(appointment => {
+
+        let service = String(
+            appointment["service"] ||
+            appointment["Service"] ||
+            ""
+        )
+        .trim()
+        .toLowerCase()
+        .replace(/-/g, " ")
+        .replace(/\s+/g, " ");
+
+        // Normalize similar service names
+        if (
+            service === "cleaning" ||
+            service === "tooth cleaning" ||
+            service === "teeth cleaning"
+        ) {
+            service = "dental cleaning";
+        }
+
+        if (
+            service === "general check" ||
+            service === "check up" ||
+            service === "checkup" ||
+            service === "general checkup"
+        ) {
+            service = "general checkup";
+        }
+
+        if (
+            service === "yearly visit" ||
+            service === "annual physical" ||
+            service === "yearly physical"
+        ) {
+            service = "yearly physical";
+        }
+
+        if (
+            service === "tooth whiting" ||
+            service === "teeth whitening" ||
+            service === "tooth whitening"
+        ) {
+            service = "teeth whitening";
+        }
+
+        if (service) {
+            serviceCounts[service] =
+                (serviceCounts[service] || 0) + 1;
+        }
+    });
+
+    const totalServices = Object.values(serviceCounts)
+        .reduce((total, count) => total + count, 0);
+
+    analyticsRequestedServices.innerHTML =
+        Object.entries(serviceCounts)
+        .sort((a, b) => b[1] - a[1])
+        .map(([service, count]) => {
+
+            const share = totalServices > 0
+                ? Math.round((count / totalServices) * 100)
+                : 0;
+
+            const displayService = service.replace(
+                /\b\w/g,
+                letter => letter.toUpperCase()
+            );
+
+            return `
+                <tr>
+                    <td>${displayService}</td>
+                    <td>${count}</td>
+                    <td>${share}%</td>
+                </tr>
+            `;
+        })
+        .join("");
 }
     // Update Dashboard statistics
     const dashboardToday = document.getElementById("dashboardToday");
@@ -803,6 +975,24 @@ if (dashboardReminderStatus) {
             appointment["SMS Reminder sent"] || "No";
 
             const rawTime = appointment["appointment time"] || "";
+            const rawDate = appointment["appointment Date"] || "";
+
+let formattedDate = rawDate;
+
+if (rawDate) {
+    const dateOnly = rawDate.split("T")[0];
+    const [year, month, day] = dateOnly.split("-").map(Number);
+
+    if (year && month && day) {
+        const date = new Date(year, month - 1, day);
+
+        formattedDate = date.toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+        });
+    }
+}
 
 let formattedTime = rawTime;
 
@@ -822,7 +1012,7 @@ if (/^\d{1,2}:\d{2}$/.test(rawTime)) {
         dashboardReminderStatus.innerHTML += `
             <tr>
                 <td>${appointment["Full Name"] || "N/A"}</td>
-               <td>${appointment["appointment Date"] || "N/A"}</td>
+               <td>${formattedDate || "N/A"}</td>
                <td>${formattedTime || "N/A"}</td>
                 <td>${emailReminder}</td>
                 <td>${smsReminder}</td>
@@ -998,7 +1188,40 @@ if (appointmentsTableBody) {
 }
         });
 }
+// Load AI Conversations analytics
+const analyticsTotalConversations =
+    document.getElementById("analyticsTotalConversations");
 
+    const analyticsAIConversations =
+    document.getElementById("analyticsAIConversations");
+
+    const analyticsAverageResponseTime =
+    document.getElementById("analyticsAverageResponseTime");
+
+if (analyticsTotalConversations) {
+    fetch("https://n8n.ngumtechai.com/webhook/admin-data")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Could not load AI conversations");
+            }
+
+            return response.text().then(text =>
+                text.trim() ? JSON.parse(text) : {}
+            );
+        })
+        .then(result => {
+            const conversations = result?.conversations || [];
+
+            analyticsTotalConversations.textContent =
+                conversations.length;
+                analyticsAIConversations.textContent =
+                    conversations.length;
+            console.log("AI CONVERSATIONS DATA:", conversations);
+        })
+        .catch(error => {
+            console.error("AI Conversations loading error:", error);
+        });
+}
 // Load customer statistics dynamically on Customers page
 const totalCustomersElement = document.getElementById("totalCustomers");
 const newThisMonthElement = document.getElementById("newThisMonth");
@@ -1057,7 +1280,16 @@ if (customerTableBody) {
 
         const email = latestAppointment["Email"] || "";
         const phone = latestAppointment["Phone number"] || "";
-        const lastVisit = latestAppointment["Book Date"] || "";
+        const rawLastVisit = latestAppointment["Book Date"] || "";
+
+const lastVisit = rawLastVisit
+    ? new Date(rawLastVisit).toLocaleDateString("en-US", {
+        timeZone: "America/New_York",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      })
+    : "";
 
         const row = document.createElement("tr");
         row.classList.add("customer-row");
@@ -1146,8 +1378,16 @@ if (customerProfilesGrid) {
             latestAppointment?.Service ||
             "Not available";
 
-        const lastVisit =
-            latestAppointment?.["Book Date"] || "Not available";
+     const rawLastVisit = latestAppointment?.["Book Date"] || "";
+
+const lastVisit = rawLastVisit
+    ? new Date(rawLastVisit).toLocaleDateString("en-US", {
+        timeZone: "America/New_York",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      })
+    : "Not available";
 
         const initials = name
             .split(" ")
@@ -1229,31 +1469,103 @@ const loyalCustomerAppointments = document.getElementById("loyalCustomerAppointm
 const loyalCustomerSince = document.getElementById("loyalCustomerSince");
 
 const loyalCustomerDates = appointmentData
-    .filter(appointment => appointment["Full Name"] === mostLoyalName)
-    .map(appointment =>
-        appointment["Appointment Date"] ||
-        appointment["Previous Appointment Date"] ||
-        appointment["Book Date"]
-    )
-    .filter(date => date);
+  .filter(appointment => appointment["Full Name"] === mostLoyalName)
+  .map(appointment => appointment["Book Date"])
+  .filter(date => date)
+  .map(date => new Date(date))
+  .filter(date => !isNaN(date));
 
-const earliestDate = loyalCustomerDates.sort()[0];
+const earliestDate = loyalCustomerDates.length
+  ? new Date(Math.min(...loyalCustomerDates))
+  : null;
+
 const customerSinceYear = earliestDate
-    ? earliestDate.substring(0, 4)
-    : "";
+  ? earliestDate.getFullYear()
+  : "";
 if (mostLoyalCustomer && loyalCustomerAppointments) {
     mostLoyalCustomer.textContent = mostLoyalName;
     loyalCustomerAppointments.textContent = `${mostLoyalCount} appointments`;
     loyalCustomerSince.textContent = `Customer since ${customerSinceYear}`;
 }
+// Customers: Most Requested Service
+const customerServiceCounts = {};
+
+appointmentData.forEach(appointment => {
+    let service = String(
+        appointment["service"] ||
+        appointment["Service"] ||
+        ""
+    )
+    .trim()
+    .toLowerCase()
+    .replace(/-/g, " ")
+    .replace(/\s+/g, " ");
+
+    if (service) {
+        customerServiceCounts[service] =
+            (customerServiceCounts[service] || 0) + 1;
+    }
+});
+
+const customerServiceEntries = Object.entries(customerServiceCounts)
+    .sort((a, b) => b[1] - a[1]);
+
+if (customerServiceEntries.length > 0) {
+    const [topService, topCount] = customerServiceEntries[0];
+
+    const displayService = topService.replace(/\b\w/g, char =>
+        char.toUpperCase()
+    );
+
+    const percent = appointmentData.length > 0
+        ? Math.round((topCount / appointmentData.length) * 100)
+        : 0;
+
+    const mostRequestedService =
+        document.getElementById("mostRequestedService");
+    const mostRequestedServiceBookings =
+        document.getElementById("mostRequestedServiceBookings");
+    const mostRequestedServicePercent =
+        document.getElementById("mostRequestedServicePercent");
+
+    if (
+        mostRequestedService &&
+        mostRequestedServiceBookings &&
+        mostRequestedServicePercent
+    ) {
+        mostRequestedService.textContent = displayService;
+        mostRequestedServiceBookings.textContent = `${topCount} bookings`;
+        mostRequestedServicePercent.textContent =
+            `${percent}% of all appointments`;
+    }
+}
            if (appointmentHistoryBody) {
     appointmentHistoryBody.innerHTML = "";
      appointmentData.forEach(appointment => {
              const row = document.createElement("tr");
+             const rawAppointmentDate =
+    appointment["Appointment Date"] ||
+    appointment["Previous Appointment Date"] ||
+    appointment["appointment Date"] ||
+    "";
+
+let formattedAppointmentDate = rawAppointmentDate;
+
+if (rawAppointmentDate) {
+    const date = new Date(rawAppointmentDate);
+    if (!isNaN(date)) {
+        formattedAppointmentDate = date.toLocaleDateString("en-US", {
+            timeZone: "America/New_York",
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        });
+    }
+}
              row.innerHTML = `
              <td>${appointment["Full Name"] || ""}</td>
               <td>${appointment["service"] || ""}</td>
-              <td>${appointment["Appointment Date"] || appointment["Previous Appointment Date"] || appointment["Book Date"] || ""}</td>
+              <td>${formattedAppointmentDate || "N/A"}</td>
               <td>${appointment["appointment time"] || appointment["Previous  appointment time"] || ""}</td>
               <td>${appointment["Status"] || "Completed"}</td>
               `;
@@ -1266,11 +1578,10 @@ if (mostLoyalCustomer && loyalCustomerAppointments) {
 
 if (recentCustomerActivityBody) {
     recentCustomerActivityBody.innerHTML = "";
-
-   appointmentData
+appointmentData
     .filter(appointment => {
         const dateValue =
-            appointment["Appointment Date"] ||
+            appointment["appointment Date"] ||
             appointment["Previous Appointment Date"] ||
             appointment["Book Date"];
 
@@ -1285,13 +1596,13 @@ if (recentCustomerActivityBody) {
     })
     .sort((a, b) => {
         const dateA = new Date(
-            a["Appointment Date"] ||
+            a["appointment Date"] ||
             a["Previous Appointment Date"] ||
             a["Book Date"]
         );
 
         const dateB = new Date(
-            b["Appointment Date"] ||
+            b["appointment Date"] ||
             b["Previous Appointment Date"] ||
             b["Book Date"]
         );
@@ -1302,20 +1613,84 @@ if (recentCustomerActivityBody) {
     .forEach(appointment => {
         const row = document.createElement("tr");
 
-            const status = appointment["Status"] || "Completed";
+        const dateValue =
+            appointment["appointment Date"] ||
+            appointment["Previous Appointment Date"] ||
+            appointment["Book Date"];
 
-            row.innerHTML = `
-                <td>${appointment["Full Name"] || ""}</td>
-                <td>${appointment["service"] || "Appointment"}</td>
-                <td>${appointment["Appointment Date"] || appointment["Previous Appointment Date"] || appointment["Book Date"] || ""}</td>
-                <td>${status}</td>
-            `;
+        const formattedDate = dateValue
+            ? new Date(dateValue).toLocaleDateString()
+            : "N/A";
 
-            recentCustomerActivityBody.appendChild(row);
-        });
- }
+        const status = appointment["Status"] || "Completed";
 
- });
+        row.innerHTML = `
+            <td>${appointment["Full Name"] || ""}</td>
+            <td>${appointment["service"] || "Appointment"}</td>
+            <td>${formattedDate}</td>
+            <td>${status}</td>
+        `;
+
+        recentCustomerActivityBody.appendChild(row);
+    });
+}
+
+// Customers: AI Recommendation
+const aiCustomerRecommendation =
+    document.getElementById("aiCustomerRecommendation");
+
+if (aiCustomerRecommendation) {
+    const now = new Date();
+
+    // Store the most recent appointment date for each customer
+    const latestAppointmentByCustomer = {};
+
+    appointmentData.forEach(appointment => {
+        const name = (appointment["Full Name"] || "").trim();
+
+        const dateValue =
+            appointment["appointment Date"] ||
+            appointment["Previous Appointment Date"] ||
+            appointment["Book Date"];
+
+        if (!name || !dateValue) return;
+
+        const appointmentDate = new Date(dateValue);
+
+        if (isNaN(appointmentDate.getTime())) return;
+
+        if (
+            !latestAppointmentByCustomer[name] ||
+            appointmentDate > latestAppointmentByCustomer[name]
+        ) {
+            latestAppointmentByCustomer[name] = appointmentDate;
+        }
+    });
+
+    // Count customers whose MOST RECENT appointment
+    // was at least 30 days ago
+    const inactiveNames = Object.entries(latestAppointmentByCustomer)
+        .filter(([name, appointmentDate]) => {
+            const daysSinceVisit =
+                (now - appointmentDate) / (1000 * 60 * 60 * 24);
+
+            return daysSinceVisit >= 30;
+        })
+        .map(([name]) => name);
+
+console.log("INACTIVE CUSTOMERS:", inactiveNames);
+
+    if (inactiveNames.length > 0) {
+        aiCustomerRecommendation.textContent =
+            `Send a follow up email to ${inactiveNames.length} customer${inactiveNames.length === 1 ? "" : "s"} who have not visited in 30+ days.`;
+    } else {
+        aiCustomerRecommendation.textContent =
+            "No customer follow-up is currently needed.";
+    }
+}
+
+});
+ 
 
 
  // ================================
@@ -1450,5 +1825,7 @@ if (aiAlternativeTimesBox && localStorage.getItem("aiAlternativeTimes") !== null
 
 if (aiBusinessInsightsBox && localStorage.getItem("aiBusinessInsights") !== null) {
     aiBusinessInsightsBox.checked =
-        localStorage.getItem("aiBusinessInsights") === "true";
+
+    localStorage.getItem("aiBusinessInsights") === "true";
 }
+ 
