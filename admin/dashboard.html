@@ -12,7 +12,11 @@
 </head>
 
 <body>
-<body>
+    <script>
+    if (sessionStorage.getItem("adminAuthenticated") !== "true") {
+        window.location.href = "login.html";
+    }
+</script>
 
     <div class="admin-layout">
 
