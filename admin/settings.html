@@ -13,7 +13,13 @@
 
 <body>
 
-    <div class="admin-layout">
+<script>
+if (sessionStorage.getItem("adminAuthenticated") !== "true") {
+    window.location.href = "login.html";
+}
+</script>
+
+<div class="admin-layout">
 
         <aside class="sidebar">
 
