@@ -26,6 +26,7 @@ console.log("Raw n8n response:", text);
 const data = JSON.parse(text);
 
 if (data.success === true) {
+    sessionStorage.setItem("adminAuthenticated", "true");
     window.location.href = "dashboard.html";
 } else {
     alert(data.message || "Invalid email or password.");
