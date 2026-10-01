@@ -12,6 +12,11 @@
 </head>
 
 <body>
+    <script>
+    if (sessionStorage.getItem("adminAuthenticated") !== "true") {
+        window.location.href = "login.html";
+    }
+</script>
 
     <div class="admin-layout">
 
@@ -195,14 +200,14 @@
 
         <div class="customer-card">
             <h3>Most Requested Service</h3>
-            <p><strong>Consultation</strong></p>
-            <p>58 bookings</p>
-            <p>37% of all appointments</p>
+           <p><strong id="mostRequestedService">--</strong></p>
+           <p id="mostRequestedServiceBookings">-- bookings</p>
+           <p id="mostRequestedServicePercent">--% of all appointments</p>
         </div>
 
         <div class="customer-card">
             <h3>AI Recommendation</h3>
-            <p>Send a follow up email to customers who have not visited in 30+ days.</p>
+            <p id="aiCustomerRecommendation">Loading recommendation...</p>
         </div>
 
     </div>
