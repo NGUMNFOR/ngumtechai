@@ -31,6 +31,7 @@ if (sessionStorage.getItem("adminAuthenticated") !== "true") {
                 <a href="customers.html">Customers</a>
                 <a href="analytics.html">Analytics</a>
                 <a href="settings.html" class="active">Settings</a>
+                <a href="#" id="logoutBtn">Logout</a>
             </nav>
 
         </aside>
@@ -184,6 +185,12 @@ if (sessionStorage.getItem("adminAuthenticated") !== "true") {
     </div>
 
     <script src="js/admin.js"></script>
-
+<script>
+document.getElementById("logoutBtn").addEventListener("click", function (event) {
+    event.preventDefault();
+    sessionStorage.removeItem("adminAuthenticated");
+    window.location.href = "login.html";
+});
+</script>
 </body>
 </html>
