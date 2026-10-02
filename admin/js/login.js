@@ -27,6 +27,7 @@ const data = JSON.parse(text);
 
 if (data.success === true) {
     sessionStorage.setItem("adminAuthenticated", "true");
+    sessionStorage.setItem("userRole", data.user.role);
     window.location.href = "dashboard.html";
 } else {
     alert(data.message || "Invalid email or password.");

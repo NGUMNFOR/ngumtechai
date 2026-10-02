@@ -17,6 +17,11 @@
 if (sessionStorage.getItem("adminAuthenticated") !== "true") {
     window.location.href = "login.html";
 }
+const userRole = sessionStorage.getItem("userRole");
+
+if (userRole !== "Admin") {
+    window.location.href = "appointments.html";
+}
 </script>
 
 <div class="admin-layout">
