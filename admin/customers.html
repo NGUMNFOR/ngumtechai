@@ -29,6 +29,7 @@
                 <a href="customers.html" class="active">Customers</a>
                 <a href="analytics.html">Analytics</a>
                 <a href="settings.html">Settings</a>
+                <a href="#" id="logoutBtn">Logout</a>
             </nav>
         </aside>
 
@@ -282,6 +283,13 @@
 </div>
 
 <script src="js/admin.js"></script>
+<script>
+document.getElementById("logoutBtn").addEventListener("click", function (event) {
+    event.preventDefault();
+    sessionStorage.removeItem("adminAuthenticated");
+    window.location.href = "login.html";
+});
+</script>
 
 </body>
 </html>
