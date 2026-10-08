@@ -187,9 +187,9 @@ if (userRole !== "Admin") {
         Add and manage users who have access to the admin dashboard.
     </p>
 
-    <button type="button" id="manageUsersBtn" class="settings-save-btn">
-        Manage Users
-    </button>
+    <a href="users.html" class="settings-save-btn" style="display:block; text-align:center; text-decoration:none;">
+    Manage Users
+</a>
 </div>
             </section>
 
@@ -203,6 +203,14 @@ document.getElementById("logoutBtn").addEventListener("click", function (event) 
     event.preventDefault();
     sessionStorage.removeItem("adminAuthenticated");
     window.location.href = "login.html";
+});
+</script>
+<button type="button" id="manageUsersBtn" class="settings-save-btn">
+    Manage Users
+</button>
+<script>
+document.getElementById("manageUsersBtn").addEventListener("click", function () {
+    window.location.href = "users.html";
 });
 </script>
 </body>
