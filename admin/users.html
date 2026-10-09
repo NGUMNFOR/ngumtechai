@@ -89,6 +89,19 @@
 </head>
 
 <body>
+    <script>
+(function () {
+    const isAuthenticated =
+        sessionStorage.getItem("adminAuthenticated") === "true";
+
+    const userRole =
+        sessionStorage.getItem("userRole");
+
+    if (!isAuthenticated || userRole !== "Admin") {
+        window.location.replace("login.html");
+    }
+})();
+</script>
 
     <h1>Manage Users</h1>
 
