@@ -97,7 +97,7 @@
     const userRole =
         sessionStorage.getItem("userRole");
 
-    if (!isAuthenticated || userRole !== "Admin") {
+    if (!isAuthenticated || (userRole || "").trim().toLowerCase() !== "admin") {
         window.location.replace("login.html");
     }
 })();
@@ -191,6 +191,54 @@ document.getElementById("addUserForm").addEventListener("submit", async function
     }
 });
 </script>
+<script>
+async function loadUsers() {
+    const tableBody = document.getElementById("usersTableBody");
 
+    tableBody.innerHTML = '<tr><td colspan="5">Loading users...</td></tr>';
+
+    try {
+        const response = await fetch(
+            "https://n8n.ngumtechai.com/webhook/get-users"
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to load users");
+        }
+
+        const users = await response.json();
+
+        tableBody.innerHTML = "";
+
+        users.forEach(user => {
+            const row = document.createElement("tr");
+
+            [user.name, user.email, user.role].forEach(value => {
+                const cell = document.createElement("td");
+                cell.textContent = value ?? "";
+                row.appendChild(cell);
+            });
+
+            const statusCell = document.createElement("td");
+            statusCell.textContent =
+                user.active === true ? "Active" : "Inactive";
+            row.appendChild(statusCell);
+
+            const actionCell = document.createElement("td");
+            actionCell.textContent = "View";
+            row.appendChild(actionCell);
+
+            tableBody.appendChild(row);
+        });
+
+    } catch (error) {
+        console.error("Error loading users:", error);
+        tableBody.innerHTML =
+            '<tr><td colspan="5">Unable to load users</td></tr>';
+    }
+}
+
+document.addEventListener("DOMContentLoaded", loadUsers);
+</script>
 </body>
 </html>
