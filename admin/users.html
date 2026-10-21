@@ -263,6 +263,23 @@ viewButton.addEventListener("click", function () {
 });
 
 actionCell.appendChild(viewButton);
+
+const editButton = document.createElement("button");
+editButton.textContent = "Edit";
+editButton.type = "button";
+
+editButton.style.background = "#16a34a";
+editButton.style.color = "white";
+editButton.style.border = "none";
+editButton.style.padding = "6px 14px";
+editButton.style.borderRadius = "5px";
+editButton.style.cursor = "pointer";
+editButton.style.marginLeft = "8px";
+
+editButton.addEventListener("click", function () {
+    alert("Edit User: " + user.name);
+});
+actionCell.appendChild(editButton);
 row.appendChild(actionCell);
 
             tableBody.appendChild(row);
