@@ -233,8 +233,37 @@ const response = await fetch(
             row.appendChild(statusCell);
 
             const actionCell = document.createElement("td");
-            actionCell.textContent = "View";
-            row.appendChild(actionCell);
+
+const viewButton = document.createElement("button");
+viewButton.textContent = "View";
+viewButton.type = "button";
+
+viewButton.style.background = "#2563eb";
+viewButton.style.color = "white";
+viewButton.style.border = "none";
+viewButton.style.padding = "6px 14px";
+viewButton.style.borderRadius = "5px";
+viewButton.style.cursor = "pointer";
+
+viewButton.addEventListener("click", function () {
+
+    const name = user.name || "N/A";
+    const email = user.email || "N/A";
+    const role = user.role || "N/A";
+    const status = user.active === true ? "Active" : "Inactive";
+
+    alert(
+        "USER DETAILS\n\n" +
+        "Full Name: " + name + "\n" +
+        "Email: " + email + "\n" +
+        "Role: " + role + "\n" +
+        "Status: " + status
+    );
+
+});
+
+actionCell.appendChild(viewButton);
+row.appendChild(actionCell);
 
             tableBody.appendChild(row);
         });
