@@ -276,8 +276,50 @@ editButton.style.borderRadius = "5px";
 editButton.style.cursor = "pointer";
 editButton.style.marginLeft = "8px";
 
-editButton.addEventListener("click", function () {
-    alert("Edit User: " + user.name);
+editButton.addEventListener("click", async function () {
+    const newName = prompt("Edit name:", user.name || "");
+    if (newName === null) return;
+
+    const newRole = prompt("Edit role:", user.role || "");
+    if (newRole === null) return;
+
+    const newActive = confirm(
+        "Should this user remain Active?\n\nOK = Active\nCancel = Inactive"
+    );
+
+    const sessionToken = sessionStorage.getItem("sessionToken");
+
+    try {
+        const response = await fetch(
+            "https://n8n.ngumtechai.com/webhook/admin-edit-user",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Session-Token": sessionToken
+                },
+                body: JSON.stringify({
+                    email: user.email,
+                    name: newName.trim(),
+                    role: newRole.trim(),
+                    active: newActive
+                })
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok || result.success !== true) {
+            throw new Error(result.message || "Unable to update user.");
+        }
+
+        alert("User updated successfully.");
+        await loadUsers();
+
+    } catch (error) {
+        console.error("Error updating user:", error);
+        alert("Unable to update user.");
+    }
 });
 actionCell.appendChild(editButton);
 row.appendChild(actionCell);
