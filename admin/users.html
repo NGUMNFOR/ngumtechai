@@ -280,6 +280,8 @@ editButton.addEventListener("click", async function () {
     const newName = prompt("Edit name:", user.name || "");
     if (newName === null) return;
 
+    const newEmail = prompt("Edit email:", user.email || "");
+if (newEmail === null) return;
     const newRole = prompt("Edit role:", user.role || "");
     if (newRole === null) return;
 
@@ -300,6 +302,7 @@ editButton.addEventListener("click", async function () {
                 },
                 body: JSON.stringify({
                     email: user.email,
+                    newEmail: newEmail.trim(),
                     name: newName.trim(),
                     role: newRole.trim(),
                     active: newActive
