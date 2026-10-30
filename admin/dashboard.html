@@ -306,11 +306,39 @@
 
     <script src="js/admin.js"></script>
     <script>
-    document.getElementById("logoutBtn").addEventListener("click", function (event) {
-        event.preventDefault();
+    document.getElementById("logoutBtn").addEventListener("click", async function (event) {
+    event.preventDefault();
+
+    const sessionToken = sessionStorage.getItem("sessionToken");
+
+    try {
+        if (sessionToken) {
+            const response = await fetch(
+                "https://n8n.ngumtechai.com/webhook/admin-logout",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-Session-Token": sessionToken
+                    },
+                    body: JSON.stringify({})
+                }
+            );
+
+            if (!response.ok) {
+                console.error("Server logout failed:", response.status);
+            }
+        }
+    } catch (error) {
+        console.error("Logout request failed:", error);
+    } finally {
         sessionStorage.removeItem("adminAuthenticated");
+        sessionStorage.removeItem("sessionToken");
+        sessionStorage.removeItem("userRole");
+
         window.location.href = "login.html";
-    });
+    }
+});
 </script>
 
 </body>
